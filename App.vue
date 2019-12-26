@@ -59,13 +59,25 @@
 		display: flex;
 		flex: 1;
 		flex-direction: column;
+		padding: 20rpx;
+		height: 1000px;
 		background-color: #efeff4;
-		padding: 20upx;
 	}
-
+    .hole {
+		background-color: #efeff4;
+		padding-top: var(--status-bar-height);
+	}
+	.status-bar {
+		height: var(--status-bar-height);
+		min-height: 25px;
+		background-color: #0faeff;
+		position: fixed;
+		width: 750rpx;
+		top: 0;
+	}
 	.input-group {
 		background-color: #ffffff;
-		margin-top: 40upx;
+		margin-top: 40rpx;
 		position: relative;
 	}
 
@@ -74,7 +86,7 @@
 		right: 0;
 		top: 0;
 		left: 0;
-		height: 1upx;
+		height: 1rpx;
 		content: '';
 		-webkit-transform: scaleY(.5);
 		transform: scaleY(.5);
@@ -86,7 +98,7 @@
 		right: 0;
 		bottom: 0;
 		left: 0;
-		height: 1upx;
+		height: 1rpx;
 		content: '';
 		-webkit-transform: scaleY(.5);
 		transform: scaleY(.5);
@@ -101,19 +113,19 @@
 
 	.input-row .title {
 		width: 20%;
-		height: 50upx;
-		min-height: 50upx;
-		padding: 15upx 0;
-		padding-left: 30upx;
-		line-height: 50upx;
+		height: 50rpx;
+		min-height: 50rpx;
+		padding: 15rpx 0;
+		padding-left: 30rpx;
+		line-height: 50rpx;
 	}
 
 	.input-row.border::after {
 		position: absolute;
 		right: 0;
 		bottom: 0;
-		left: 15upx;
-		height: 1upx;
+		left: 15rpx;
+		height: 1rpx;
 		content: '';
 		-webkit-transform: scaleY(.5);
 		transform: scaleY(.5);
@@ -121,8 +133,8 @@
 	}
 
 	.btn-row {
-		margin-top: 50upx;
-		padding: 20upx;
+		margin-top: 50rpx;
+		padding: 20rpx;
 	}
 
 	button.primary {

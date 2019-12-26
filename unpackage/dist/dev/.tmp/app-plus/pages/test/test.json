@@ -1,4 +1,8 @@
 {
-  "navigationBarTitleText": "联系人",
-  "usingComponents": {}
+  "navigationBarTitleText": "消息",
+  "navigationStyle": "custom",
+  "titleView": false,
+  "usingComponents": {
+    "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar"
+  }
 }

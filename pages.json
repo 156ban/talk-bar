@@ -3,26 +3,11 @@
         {
             "path": "pages/main/main",
             "style": {
-                "navigationBarTitleText": "消息",
+				 "navigationBarTitleText": "消息",
+				 "navigationStyle":"custom",
 				"app-plus": {
-				                    "bounce": "none",
-				                    "titleNView": {
-				                        "buttons": [ 
-				                            {
-				                                "text": "地图", 
-				                                "fontSize":"16",
-				                                "float": "right",
-				                                "color":"#fff"
-				                            },
-				                            {
-				                                "text": "唐山", 
-				                                "fontSize":"16",
-				                                "float": "left",
-				                                "color":"#fff"
-				                            }
-				                        ]
-				                    }
-				                }
+				                   "titleView":false
+							  }
             }
         }, {
             "path": "pages/login/login",
@@ -47,7 +32,11 @@
         }, {
             "path": "pages/test/test",
             "style": {
-                "navigationBarTitleText": "联系人"
+            	 "navigationBarTitleText": "消息",
+            	 "navigationStyle":"custom",
+            	"app-plus": {
+            	                   "titleView":false
+            				  }
             }
         }
     ],

@@ -1,24 +1,35 @@
 <template>
-    <view class="content">
-        <view v-if="hasLogin" class="hello">
-            <view class="title">
-                您好 {{userName}}，您已成功登录。
-            </view>
-            <view class="ul">
-                <view>这是 uni-app 带登录模板的示例App首页。</view>
-                <view>在 “我的” 中点击 “退出” 可以 “注销当前账户”</view>
-            </view>
-        </view>
-        <view v-if="!hasLogin" class="hello">
-            <view class="title">
-                您好 游客。
-            </view>
-            <view class="ul">
-                <view>这是 uni-app 带登录模板的示例App首页。</view>
-                <view>在 “我的” 中点击 “登录” 可以 “登录您的账户”</view>
-            </view>
-        </view>
-    </view>
+	<view class="hole">
+		<div class="status-bar"></div>
+		<uni-nav-bar  
+		  left-text="杨洋"
+		  backgroundColor="#0faeff"
+		  color="#ffffff"
+		  :fixed="true"
+		  :shadow="false"
+		  :border="false"
+		  title="消息"/>
+		<view class="content">
+			<view v-if="hasLogin" class="hello">
+				<view class="title">
+					您好 {{userName}}，您已成功登录。
+				</view>
+				<view class="ul">
+					<view>这是 uni-app 带登录模板的示例App首页。</view>
+					<view>在 “我的” 中点击 “退出” 可以 “注销当前账户”</view>
+				</view>
+			</view>
+			<view v-if="!hasLogin" class="hello">
+				<view class="title">
+					您好 游客。
+				</view>
+				<view class="ul">
+					<view>这是 uni-app 带登录模板的示例App首页。</view>
+					<view>在 “我的” 中点击 “登录” 可以 “登录您的账户”</view>
+				</view>
+			</view>
+		</view>
+	</view>
 </template>
 
 <script>
@@ -27,6 +38,11 @@
     } from 'vuex'
 
     export default {
+		data() {
+			return {
+				city: '北京'
+			}
+		},
         computed: mapState(['forcedLogin', 'hasLogin', 'userName']),
         onLoad() {
             if (!this.hasLogin) {
@@ -55,11 +71,16 @@
                     }
                 });
             }
-        }
+        },
+		components:{
+		},
+		methods:{
+			
+		}
     }
 </script>
 
-<style>
+<style lang="scss">
     .hello {
         display: flex;
         flex: 1;

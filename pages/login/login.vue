@@ -158,6 +158,9 @@
         onReady() {
             this.initPosition();
             this.initProvider();
+			uni.setNavigationBarTitle({
+				title:"剩余次卡"
+			})
         }
     }
 </script>

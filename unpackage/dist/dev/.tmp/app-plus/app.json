@@ -45,5 +45,10 @@
   },
   "appname": "jieyesao",
   "compilerVersion": "2.4.6",
-  "usingComponents": {}
+  "usingComponents": {
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar",
+    "uni-section": "/components/uni-section/uni-section",
+    "uni-status-bar": "/components/uni-status-bar/uni-status-bar"
+  }
 }

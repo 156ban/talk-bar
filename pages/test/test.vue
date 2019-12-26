@@ -1,9 +1,17 @@
 <template>
-    <view class="content">
-        <view class="btn-row">
-            <button v-if="!hasLogin" type="primary" class="primary" @tap="bindLogin">中间人</button>
-            <button v-if="hasLogin" type="default" @tap="bindLogout">退出登录</button>
-        </view>
+    <view class="hole">
+    	<div class="status-bar"></div>
+    	<uni-nav-bar  
+    	  left-text="杨洋"
+    	  backgroundColor="#0faeff"
+    	  color="#ffffff"
+    	  :shadow="false"
+    	  :border="false"
+		  :fixed="true"
+    	  title="消息"/>
+    	<view class="content">
+    		
+    	</view>
     </view>
 </template>
 
@@ -15,30 +23,23 @@
 
     export default {
         computed: {
-            ...mapState(['hasLogin', 'forcedLogin'])
         },
         methods: {
-            ...mapMutations(['logout']),
-            bindLogin() {
-                uni.navigateTo({
-                    url: '../login/login',
-                });
-            },
-            bindLogout() {
-                this.logout();
-                /**
-                 * 如果需要强制登录跳转回登录页面
-                 */
-                if (this.forcedLogin) {
-                    uni.reLaunch({
-                        url: '../login/login',
-                    });
-                }
-            }
+            
         }
     }
 </script>
 
 <style>
-
+.status-bar {
+		height: var(--status-bar-height);
+		min-height: 25px;
+		background-color: #0faeff;
+	}
+	
+.hello {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+}
 </style>
