@@ -1,1 +1,1 @@
-<view class="hole"><view class="status-bar _div"></view><uni-nav-bar vue-id="1" left-text="杨洋" backgroundColor="#0faeff" color="#ffffff" shadow="{{false}}" border="{{false}}" fixed="{{true}}" title="消息" bind:__l="__l"></uni-nav-bar><view class="content"></view></view>
+<view class="hole"><view class="status-bar _div"></view><uni-nav-bar vue-id="1" left-text="杨洋" backgroundColor="#0faeff" color="#ffffff" shadow="{{false}}" border="{{false}}" fixed="{{true}}" title="联系人" bind:__l="__l"></uni-nav-bar><view class="content"></view></view>

@@ -8,7 +8,7 @@
     	  :shadow="false"
     	  :border="false"
 		  :fixed="true"
-    	  title="消息"/>
+    	  title="联系人"/>
     	<view class="content">
     		
     	</view>

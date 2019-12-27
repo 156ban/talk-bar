@@ -1364,7 +1364,7 @@ Z([3,'#ffffff'])
 Z([1,true])
 Z([3,'杨洋'])
 Z(z[4])
-Z([3,'消息'])
+Z([3,'联系人'])
 Z([3,'1'])
 Z([3,'content'])
 })(__WXML_GLOBAL__.ops_cached.$gwx_11);return __WXML_GLOBAL__.ops_cached.$gwx_11
