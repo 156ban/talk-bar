@@ -10,25 +10,13 @@
 		  :border="false"
 		  title="消息"/>
 		<view class="content">
-			<view class="message-card">
-					<view class="message-card-left">杨</view>
-					<view class="message-card-right">
-						<view class="message-card-top">
-							<view class="message-card-title">啊实打实</view>
-							<view class="message-card-time">上午11:00</view>
-						</view>
-						<view class="message-card-bottom"> 
-							<view class="message-card-info">aasdsadassaAAaaa啊啊啊</view>
-							<view class="message-card-num">2</view>
-						</view>
-					</view>
-			</view>
-			<view class="message-card">
-				
-			</view>
-			<view class="message-card">
-				
-			</view>
+			<info-card></info-card>
+			<info-card></info-card>
+			<info-card></info-card>
+			<info-card></info-card>
+			<info-card></info-card>
+			<info-card></info-card>
+			<info-card></info-card>
 		</view>
 	</view>
 </template>
@@ -37,7 +25,7 @@
     import {
         mapState
     } from 'vuex'
-
+    import  infoCard from '@/components/aa-my-com/info-card.vue'
     export default {
 		data() {
 			return {
@@ -74,6 +62,7 @@
             }
         },
 		components:{
+			infoCard
 		},
 		methods:{
 			
@@ -93,65 +82,11 @@
         margin-top: 50upx;
     }
 
-	.message-card {
-		background-color: red;
-		width: 100%;
-		height: 46px;
-		margin-bottom: 24px;
-		display: flex;
-		flex-direction: row;
-	}
 	
 	.uni-flex {
 		display: flex;
 		flex-direction: row;
     }
     
-	.message-card-left {
-		height: 100%;
-		width: 46px;
-		background-color: blue;
-		border-radius:46px;
-		line-height: 46px;
-		text-align: center;
-	}
-	.message-card-right {
-		height: 30px;
-		margin-left: 20rpx;
-		background-color: purple;
-		-webkit-flex: 1;
-		flex: 1;
-		padding: 8px 0;
-		.message-card-top {
-			height: 15px;
-			background-color: yellow;
-			line-height: 15px;
-			.message-card-title {
-			   font-size: 15px;
-			   display: inline-block;
-			   width: calc(100% - 56px);
-			}
-			.message-card-time {
-				font-size: 8px;
-				text-align: right;
-				display: inline-block;
-				width: 56px;
-			}
-		}
-		.message-card-bottom {
-			height: 15px;
-			background-color: green;
-			.message-card-info {
-			   font-size: 13px;
-			   display: inline-block;
-			   width: calc(100% - 56px);
-			}
-			.message-card-num {
-			   font-size: 8px;
-			   text-align: right;
-			   display: inline-block;
-			   width: 56px;
-			}
-		}
-	}
+
 </style>
