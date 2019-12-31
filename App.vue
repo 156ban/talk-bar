@@ -60,7 +60,6 @@
 		flex: 1;
 		flex-direction: column;
 		padding: 20rpx;
-		height: 1000px;
 		background-color: #efeff4;
 	}
     .hole {
