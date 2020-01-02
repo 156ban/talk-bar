@@ -1,5 +1,5 @@
 <template>
-	<view class="message-card">
+	<view class="message-card" hover-class="press-on">
 			<view class="message-card-left">{{userName}}</view>
 			<view class="message-card-right">
 				<view class="message-card-top">
@@ -48,12 +48,14 @@
 </script>
 
 <style lang="scss">
+	
 	.message-card {
 		width: 100%;
 		height: 46px;
-		margin-bottom: 24px;
+		padding-bottom: 24px;
 		display: flex;
 		flex-direction: row;
+		border-radius: 5px;
 	}
 	.message-card-left {
 		height: 100%;
@@ -108,5 +110,7 @@
 			}
 		}
 	}
-	
+	.press-on {
+	    background-color: #d6d6d6;
+	}
 </style>

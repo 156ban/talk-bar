@@ -1,13 +1,22 @@
 {
     "pages": [ //pages数组中第一项表示应用启动页,
         {
-            "path": "pages/main/main",
+            "path": "pages/message/message",
             "style": {
 				 "navigationBarTitleText": "消息",
 				 "navigationStyle":"custom",
 				"app-plus": {
 				                   "titleView":false
 							  }
+            }
+        },  {
+            "path": "pages/friend/friend",
+            "style": {
+            	 "navigationBarTitleText": "消息",
+            	 "navigationStyle":"custom",
+            	"app-plus": {
+            	                   "titleView":false
+            				  }
             }
         }, {
             "path": "pages/login/login",
@@ -29,15 +38,6 @@
             "style": {
                 "navigationBarTitleText": "动态"
             }
-        }, {
-            "path": "pages/test/test",
-            "style": {
-            	 "navigationBarTitleText": "消息",
-            	 "navigationStyle":"custom",
-            	"app-plus": {
-            	                   "titleView":false
-            				  }
-            }
         }
     ],
     "tabBar": {
@@ -45,16 +45,16 @@
         "selectedColor": "#0faeff",
         "backgroundColor": "#ffffff",
         "list": [{
-            "pagePath": "pages/main/main",
+            "pagePath": "pages/message/message",
             "text": "消息",
             "iconPath": "static/img/home.png",
             "selectedIconPath": "static/img/homeHL.png"
         },
 		{
-		    "pagePath": "pages/test/test",
+		    "pagePath": "pages/friend/friend",
 		    "text": "联系人",
-		    "iconPath": "static/img/home.png",
-		    "selectedIconPath": "static/img/homeHL.png"
+		    "iconPath": "static/img/user.png",
+		    "selectedIconPath": "static/img/userHL.png"
 		},{
             "pagePath": "pages/user/user",
             "text": "动态",

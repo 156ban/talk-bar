@@ -1,16 +1,18 @@
 <template>
 	<view class="hole">
 		<div class="status-bar"></div>
-		<uni-nav-bar  
-		  left-text="杨洋"
-		  backgroundColor="#0faeff"
-		  color="#ffffff"
-		  :fixed="true"
-		  :shadow="false"
-		  :border="false"
-		  title="消息"/>
+		<nav-bar 
+		 :navTitle="navTitle"/>
 		<view class="content">
-			<info-card></info-card>
+			<info-card
+			 v-for="(item,index) in MockData"
+			 :key="index" 
+			 :userName="item.userName"
+			 :title="item.title"
+			 :time="item.time"
+			 :info="item.info"
+			 :messageNum="item.messageNum">
+			</info-card>
 			<info-card></info-card>
 			<info-card></info-card>
 			<info-card></info-card>
@@ -25,11 +27,18 @@
     import {
         mapState
     } from 'vuex'
-    import  infoCard from '@/components/aa-my-com/info-card.vue'
+	import  infoCard from '@/components/aa-my-com/info-card.vue'
+	import  navBar from '@/components/aa-my-com/nav-bar.vue'
     export default {
 		data() {
 			return {
-				city: '北京'
+				navTitle:"消息",
+				city: '北京',
+				MockData:[{userName:"王",
+				           title:"这是人名",
+						   time:"下午1:00",
+						   info:"人生不满百，常怀千岁忧",
+						   messageNum:"18"}]
 			}
 		},
         computed: mapState(['forcedLogin', 'hasLogin', 'userName']),
@@ -62,7 +71,7 @@
             }
         },
 		components:{
-			infoCard
+			infoCard,navBar
 		},
 		methods:{
 			

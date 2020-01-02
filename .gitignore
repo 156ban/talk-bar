@@ -1,2 +1,4 @@
-/unpackage
-/node_modules
+
+node_modules/
+unpackage/
+# Editor directories and files

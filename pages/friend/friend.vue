@@ -1,14 +1,8 @@
 <template>
     <view class="hole">
     	<div class="status-bar"></div>
-    	<uni-nav-bar  
-    	  left-text="杨洋"
-    	  backgroundColor="#0faeff"
-    	  color="#ffffff"
-    	  :shadow="false"
-    	  :border="false"
-		  :fixed="true"
-    	  title="联系人"/>
+    	<nav-bar
+    	 :navTitle="navTitle"/>
     	<view class="content">
     		
     	</view>
@@ -20,13 +14,21 @@
         mapState,
         mapMutations
     } from 'vuex'
-
+    import  navBar from '@/components/aa-my-com/nav-bar.vue'
     export default {
+		data(){
+		  return {
+			  navTitle:"联系人"
+		  }
+		},
         computed: {
         },
         methods: {
             
-        }
+        },
+		components:{
+			navBar
+		}
     }
 </script>
 
