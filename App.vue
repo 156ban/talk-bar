@@ -54,17 +54,13 @@
 		min-height: 100%;
 		display: flex;
 	}
-
-	.content {
-		display: flex;
-		flex: 1;
-		flex-direction: column;
-		padding: 20rpx;
-		background-color: #efeff4;
-	}
+   .press-on {
+       background-color: #d6d6d6;
+   }
     .hole {
 		background-color: #efeff4;
 		padding-top: var(--status-bar-height);
+		width: 100%;
 	}
 	.status-bar {
 		height: var(--status-bar-height);

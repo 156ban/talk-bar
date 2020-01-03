@@ -1,18 +1,24 @@
 <template>
-	<view class="hole">
+	<view class="hole message">
 		<div class="status-bar"></div>
 		<nav-bar 
 		 :navTitle="navTitle"/>
-		<view class="content">
-			<info-card
-			 v-for="(item,index) in MockData"
-			 :key="index" 
-			 :userName="item.userName"
-			 :title="item.title"
-			 :time="item.time"
-			 :info="item.info"
-			 :messageNum="item.messageNum">
-			</info-card>
+		<view class="info-card-group">
+			<view 
+			  @tap="goDetail()" 
+			  class=""
+			  v-for="(item,index) in MockData"
+			  :key="index" >
+				<info-card
+				 :userName="item.userName"
+				 :title="item.title"
+				 :time="item.time"
+				 :info="item.info"
+				 :messageNum="item.messageNum">
+				</info-card>
+			</view>
+			<info-card></info-card>
+			<info-card></info-card>
 			<info-card></info-card>
 			<info-card></info-card>
 			<info-card></info-card>
@@ -74,7 +80,11 @@
 			infoCard,navBar
 		},
 		methods:{
-			
+			goDetail() {
+				uni.navigateTo({
+					url: '../message/message-detail'
+				});
+			}
 		}
     }
 </script>
@@ -96,6 +106,8 @@
 		display: flex;
 		flex-direction: row;
     }
-    
+    .info-card-group {
+		background-color: #FFFFFF;
+	}
 
 </style>

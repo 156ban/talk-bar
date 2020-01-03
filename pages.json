@@ -9,7 +9,13 @@
 				                   "titleView":false
 							  }
             }
-        },  {
+        }, {
+            "path": "pages/message/message-detail",
+            "style": {
+				 "navigationBarTitleText": "消息"
+            }
+        },
+		{
             "path": "pages/friend/friend",
             "style": {
             	 "navigationBarTitleText": "消息",

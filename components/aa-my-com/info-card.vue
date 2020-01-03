@@ -1,5 +1,5 @@
 <template>
-	<view class="message-card" hover-class="press-on">
+	<view class="message-card" hover-class="press-on" >
 			<view class="message-card-left">{{userName}}</view>
 			<view class="message-card-right">
 				<view class="message-card-top">
@@ -44,15 +44,22 @@
 				default: '99+'
 			},
 		},
+		methods:{
+			goDetail() {
+				uni.navigateTo({
+					url: '../message/message-detail'
+				});
+			}
+		}
 	}
 </script>
 
 <style lang="scss">
 	
 	.message-card {
-		width: 100%;
+		width: calc(100% - 40rpx);
 		height: 46px;
-		padding-bottom: 24px;
+		padding:12px 20rpx;
 		display: flex;
 		flex-direction: row;
 		border-radius: 5px;
@@ -111,6 +118,6 @@
 		}
 	}
 	.press-on {
-	    background-color: #d6d6d6;
+	    background-color: #efeff4;
 	}
 </style>

@@ -55,7 +55,6 @@
 					case 'top':
 						this.content = '顶部弹出 popup'
 						break
-			
 					case 'bottom':
 						this.content = '底部弹出 popup'
 						break
