@@ -10,7 +10,10 @@
     		</view>
     	</view>
 		<view class="friend-card-group">
-			<friend-card></friend-card>
+			<view 
+			 @tap="goDetail()">
+			 <friend-card></friend-card>
+			</view>
 			<friend-card></friend-card>
 			<friend-card></friend-card>
 			<friend-card></friend-card>
@@ -34,7 +37,11 @@
         computed: {
         },
         methods: {
-            
+            goDetail() {
+            	uni.navigateTo({
+            		url: '../friend/friend-detail'
+            	});
+            }
         },
 		components:{
 			navBar,friendCard
