@@ -53,11 +53,28 @@
 				</view>
 			</view>
 			<view class="user-info-card">
-				
+				<view class="edit-icon-left">
+					<uni-icons
+					 type="compose" 
+					 size="20" 
+					 color="#666666" />
+				</view>
+				<text class="">
+					{{qianMing}}
+				</text>
+				<view class="edit-icon-right">
+					<uni-icons
+					 type="arrowright"
+					 class="edit-icon-right"
+					 size="20" 
+					 color="#666666" />
+				</view>
 			</view>
 		</view>
 		<view class="friend-detail-bottom">
-			
+			<button class="bottom-btn" type="default" size="mini">个性名片</button>
+			<button class="bottom-btn" type="default" size="mini">编辑资料</button>
+			<button class="bottom-btn" type="primary" size="mini">发消息</button>
 		</view>
     </view>
 </template>
@@ -97,31 +114,28 @@
   padding: 0 20rpx;
   background-color: #FFFFFF;
   >uni-view {
-	  margin-bottom: 10px;
+	  margin-top: 10px;
   }
   &-top {
 	  height: 70px;
-	  background-color: green;
 	  display: flex;
 	  flex-direction: row;
 	  >uni-view {
 	  }
 	  &-left {
 		  width: 80px;
-		  background-color: red;
 		  .user-img {
 			  width: 70px;
 			  height: 70px;
-			  background-color: blue;
 			  border-radius:44px;
 			  line-height: 70px;
 			  text-align: center;
 			  font-size: 40px;
+			  background-color: pink;
 		  }
 	  }
 	  &-right {
 		  width: calc(100% - 80px);
-		  background-color: pink;
 		  font-size: 14px;
 		  line-height: 18px;
 		  &-top {
@@ -138,14 +152,14 @@
 			  }
 			  .dian-zan {
 				  text-align: center;
-				  width: 50px;
+				  display: flex;
+				  width: 80px;
+				  line-height: 35px;
 				  .dian-zan-icon {
-					  height: 25px;
-					  line-height: 25px;
+					  height: 35px;
 				  }
 				  .dian-zan-number {
-					  height: 10px;
-					  line-height: 10px;
+					  height: 35px;
 				  }
 			  }
 		  }
@@ -160,9 +174,7 @@
   }
   &-middle {
 	  height: 110px;
-	  background-color: yellow;
 	  .user-info-card {
-		  background-color: darkblue;
 		  height: 40px;
 		  line-height: 40px;
 		  display: flex;
@@ -176,10 +188,20 @@
   }
   &-bottom {
   	  height: 44px;
-  	  background-color: lightblue;
+  	  background-color: #efeff4;
 	  position: fixed;
 	  width: 100%;
 	  bottom: 0;
+	  left: 0;
+	  display: flex;
+	  align-items: center;
+	  .bottom-btn {
+		  justify-content: space-around;
+		  height: 34px;
+		  width: 220rpx;
+		  line-height: 34px;
+		  border: none;
+	  }
   }
 }
 </style>

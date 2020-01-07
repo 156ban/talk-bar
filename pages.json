@@ -29,6 +29,11 @@
             "style": {
             	 "navigationBarTitleText": "个人信息"
             }
+        }, {
+            "path": "pages/friend/new-friend",
+            "style": {
+            	 "navigationBarTitleText": "新朋友"
+            }
         },{
             "path": "pages/login/login",
             "style": {

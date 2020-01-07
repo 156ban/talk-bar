@@ -4,7 +4,7 @@
     	<nav-bar
     	 :navTitle="navTitle"/>
     	<view class="content">
-    		<view class="new-friend" hover-class="press-on">
+    		<view @tap="goNewFriend" class="new-friend" hover-class="press-on">
 				<view>新朋友</view>
     			<view><uni-icons class="input-uni-icon" type="arrowright" size="16" color="#666666" /></view>
     		</view>
@@ -41,7 +41,12 @@
             	uni.navigateTo({
             		url: '../friend/friend-detail'
             	});
-            }
+            },
+			goNewFriend() {
+				uni.navigateTo({
+					url: '../friend/new-friend'
+				});
+			}
         },
 		components:{
 			navBar,friendCard
@@ -76,7 +81,7 @@
   	flex-direction: column;
   }
   .press-on {
-      background-color: #efeff4;
+      background-color: #dde1e8;
   }
 }
 
