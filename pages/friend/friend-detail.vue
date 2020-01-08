@@ -33,11 +33,10 @@
 			</view>
     	</view>
 		<view class="friend-detail-middle">
-			<view class="user-info-card">
+			<view class="user-info-card" hover-class="press-on">
 				<view class="edit-icon-left">
 					<uni-icons
 					 type="compose" 
-					 
 					 size="20" 
 					 color="#666666" />
 				</view>
@@ -52,7 +51,7 @@
 					 color="#666666" />
 				</view>
 			</view>
-			<view class="user-info-card">
+			<view class="user-info-card" hover-class="press-on">
 				<view class="edit-icon-left">
 					<uni-icons
 					 type="compose" 
@@ -74,7 +73,7 @@
 		<view class="friend-detail-bottom">
 			<button class="bottom-btn" type="default" size="mini">个性名片</button>
 			<button class="bottom-btn" type="default" size="mini">编辑资料</button>
-			<button class="bottom-btn" type="primary" size="mini">发消息</button>
+			<button @tap="goMessageDetail()" class="bottom-btn" type="primary" size="mini">发消息</button>
 		</view>
     </view>
 </template>
@@ -102,7 +101,11 @@
 			
         },
         methods: {
-            
+            goMessageDetail() {
+				uni.navigateTo({
+					url: '../message/message-detail'
+				});
+			}
         },
 		components:{
 		}

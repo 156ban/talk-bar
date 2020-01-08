@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import friend from './modules/friend'
+import message from './modules/message'
 Vue.use(Vuex)
-
 const store = new Vuex.Store({
     state: {
         /**
@@ -12,6 +12,9 @@ const store = new Vuex.Store({
         hasLogin: false,
         userName: ""
     },
+	actions:{
+		
+	},
     mutations: {
         login(state, userName) {
             state.userName = userName || '新用户';
@@ -21,7 +24,11 @@ const store = new Vuex.Store({
             state.userName = "";
             state.hasLogin = false;
         }
-    }
+    },
+	modules: {
+		friend,
+		message
+	}
 })
 
 export default store

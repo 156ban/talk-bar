@@ -7,7 +7,7 @@
 			<view 
 			  @tap="goDetail()" 
 			  class=""
-			  v-for="(item,index) in MockData"
+			  v-for="(item,index) in messageListData"
 			  :key="index" >
 				<info-card
 				 :userName="item.userName"
@@ -30,9 +30,7 @@
 </template>
 
 <script>
-    import {
-        mapState
-    } from 'vuex'
+    import { mapState } from 'vuex'
 	import  infoCard from '@/components/aa-my-com/info-card.vue'
 	import  navBar from '@/components/aa-my-com/nav-bar.vue'
     export default {
@@ -47,35 +45,11 @@
 						   messageNum:"18"}]
 			}
 		},
-        computed: mapState(['forcedLogin', 'hasLogin', 'userName']),
-        onLoad() {
-            if (!this.hasLogin) {
-                uni.showModal({
-                    title: '未登录',
-                    content: '您未登录，需要登录后才能继续',
-                    /**
-                     * 如果需要强制登录，不显示取消按钮
-                     */
-                    showCancel: !this.forcedLogin,
-                    success: (res) => {
-                        if (res.confirm) {
-							/**
-							 * 如果需要强制登录，使用reLaunch方式
-							 */
-                            if (this.forcedLogin) {
-                                uni.reLaunch({
-                                    url: '../login/login'
-                                });
-                            } else {
-                                uni.navigateTo({
-                                    url: '../login/login'
-                                });
-                            }
-                        }
-                    }
-                });
-            }
-        },
+        computed: {
+		    ...mapState('message', [
+		        'messageListData',
+		      ]),
+	    },
 		components:{
 			infoCard,navBar
 		},
@@ -85,6 +59,9 @@
 					url: '../message/message-detail'
 				});
 			}
+		},
+		onLoad() {
+			this.$store.dispatch("message/getMessageListData");
 		}
     }
 </script>
