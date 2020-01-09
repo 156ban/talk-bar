@@ -35,6 +35,11 @@
             	 "navigationBarTitleText": "新朋友"
             }
         },{
+            "path": "pages/user/edit-info",
+            "style": {
+            	 "navigationBarTitleText": "个人资料"
+            }
+        },{
             "path": "pages/login/login",
             "style": {
                 "navigationBarTitleText": "登录"

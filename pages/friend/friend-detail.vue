@@ -71,8 +71,9 @@
 			</view>
 		</view>
 		<view class="friend-detail-bottom">
-			<button class="bottom-btn" type="default" size="mini">个性名片</button>
-			<button class="bottom-btn" type="default" size="mini">编辑资料</button>
+			<button v-if="!isFriend" class="bottom-btn" type="default" size="mini">添加好友</button>
+			<button v-else  class="bottom-btn" type="default" size="mini">删除好友</button>
+			<button @tap="goEditInfo()" class="bottom-btn" type="default" size="mini">编辑资料</button>
 			<button @tap="goMessageDetail()" class="bottom-btn" type="primary" size="mini">发消息</button>
 		</view>
     </view>
@@ -94,7 +95,9 @@
 			  address:"阿富汗-科布尔",
 			  xingZuo:"巨蟹座",
 			  dianZanNum:12345,
-			  qianMing:"wia"
+			  qianMing:"wia",
+			  isFriend:true,
+			  isUser:true
 		  }
 		},
         computed: {
@@ -107,6 +110,11 @@
             goMessageDetail() {
 				uni.navigateTo({
 					url: '../message/message-detail'
+				});
+			},
+			goEditInfo() {
+				uni.navigateTo({
+					url: '../user/edit-info'
 				});
 			}
         },
