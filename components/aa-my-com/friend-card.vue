@@ -17,10 +17,6 @@
 <script>
 	export default {
 		props: {
-			time: {
-				type: String,
-				default: '上午11:00'
-			},
 			info: {
 				type: String,
 				default: '不见五陵豪杰墓,无花无酒锄作田'

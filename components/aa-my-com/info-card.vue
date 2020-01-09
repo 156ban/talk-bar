@@ -13,7 +13,7 @@
 						{{info}}
 					</view>
 					<view class="message-card-num">
-						<uni-badge :text="messageNum" type="error" />
+						<uni-badge class="message-card-num-badge" :text="messageNum" type="error" />
 					</view>
 				</view>
 			</view>
@@ -58,62 +58,64 @@
 	
 	.message-card {
 		width: calc(100% - 40rpx);
-		height: 46px;
-		padding:12px 20rpx;
+		height: 120rpx;
+		padding:30rpx 20rpx;
 		display: flex;
 		flex-direction: row;
-		border-radius: 5px;
 	}
 	.message-card-left {
 		height: 100%;
-		width: 46px;
+		width: 120rpx;
 		background-color: blue;
-		border-radius:46px;
-		line-height: 46px;
+		border-radius:60rpx;
+		line-height: 120rpx;
 		text-align: center;
 	}
 	.message-card-right {
-		height: 30px;
+		height: 100%;
 		margin-left: 20rpx;
 		-webkit-flex: 1;
 		flex: 1;
-		padding-top: 9px;
-		padding-bottom: 7px;
+		padding-top: 15rpx;
+		padding-bottom: 15rpx;
 		.message-card-top {
-			height: 15px;
-			line-height: 15px;
+			height: 45rpx;
+			line-height: 45rpx;
+			display: flex;
 			.message-card-title {
-			   font-size: 15px;
-			   display: inline-block;
-			   width: calc(100% - 56px);
+			   font-size: 38rpx;
+			   width: calc(100% - 140rpx);
 			   overflow: hidden;
 			   text-overflow:ellipsis;
 			   white-space: nowrap;
 			}
 			.message-card-time {
-				font-size: 12px;
+				font-size: 30rpx;
 				text-align: right;
-				display: inline-block;
-				width: 56px;
+				width: 140rpx;
 				color: #9a9494;
 			}
 		}
 		.message-card-bottom {
-			height: 15px;
+			height: 45rpx;
+			display: flex;
 			.message-card-info {
-			   font-size: 13px;
-			   display: inline-block;
-			   width: calc(100% - 56px);
+			   font-size: 30rpx;
+			   width: calc(100% - 140rpx);
 			   color: #9a9494;
 			   overflow: hidden;
 			   text-overflow:ellipsis;
 			   white-space: nowrap;
 			}
 			.message-card-num {
-			   font-size: 12px;
+			   font-size:30rpx;
 			   text-align: right;
-			   display: inline-block;
-			   width: 56px;
+			   width: 140rpx;
+			   .message-card-num-badge {
+				   height: 45rpx;
+				   font-size:30rpx;
+				   line-height: 45rpx;
+			   }
 			}
 		}
 	}

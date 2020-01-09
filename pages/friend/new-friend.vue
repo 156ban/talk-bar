@@ -8,6 +8,17 @@
 				  class="new-friend-search"/>
     		</view>
 			<view class="person-group">
+				<view 
+				  v-for="(item,index) in newFriendListData"
+				  :key="index">
+				  <person-card
+				    :userName="item.userName"
+					:title="item.title"
+					:sex="item.sex"
+					:age="item.age"
+					:address="item.address">
+				  </person-card>
+				</view>
 				<person-card></person-card>
 				<person-card></person-card>
 			</view>
@@ -26,10 +37,22 @@
     export default {
 		data(){
 		  return {
-			  navTitle:"联系人"
+			  navTitle:"联系人",
+			  mockData:[
+				  {
+				    userName:"王",
+					title:"朱高帜",
+					sex:"女",
+					age:"25",
+					address:"美国 家里蹲",
+				  },
+			  ]
 		  }
 		},
         computed: {
+			...mapState('friend', [
+			    'newFriendListData'
+			  ]),
         },
         methods: {
             goDetail() {
@@ -40,6 +63,9 @@
         },
 		components:{
 			navBar,personCard
+		},
+		onLoad() {
+			this.$store.dispatch("friend/getNewFriendListData");
 		}
     }
 </script>

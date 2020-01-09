@@ -11,8 +11,14 @@
     	</view>
 		<view class="friend-card-group">
 			<view 
-			 @tap="goDetail()">
-			 <friend-card></friend-card>
+				v-for="(item,index) in friendListData"
+				 @tap="goDetail()"
+				 :key="index">
+				 <friend-card
+				   :userName="item.userName"
+				   :title="item.title"
+				   :info="item.info">
+				 </friend-card>
 			</view>
 			<friend-card></friend-card>
 			<friend-card></friend-card>
@@ -31,10 +37,18 @@
     export default {
 		data(){
 		  return {
-			  navTitle:"联系人"
+			  navTitle:"联系人",
+			  mockData:[{
+				  userName:"花",
+				  title:"桃花仙人",
+				  info:"本来无一物，何处惹尘埃",
+			  }]
 		  }
 		},
         computed: {
+			...mapState('friend', [
+			    'friendListData',
+			  ]),
         },
         methods: {
             goDetail() {
@@ -50,6 +64,9 @@
         },
 		components:{
 			navBar,friendCard
+		},
+		onLoad() {
+			this.$store.dispatch("friend/getFriendListData");
 		}
     }
 </script>

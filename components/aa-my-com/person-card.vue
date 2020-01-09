@@ -7,7 +7,7 @@
 				</view>
 				<view class="person-card-bottom"> 
 				    <view class="person-card-age">
-				    	男 {{age}}
+				    	{{sex}} {{age}}
 				    </view>
 					<view class="person-card-address">
 						{{address}}
@@ -20,10 +20,6 @@
 <script>
 	export default {
 		props: {
-			time: {
-				type: String,
-				default: '上午11:00'
-			},
 			address: {
 				type: String,
 				default: '广东 广州'
@@ -39,6 +35,10 @@
 			age: {
 				type: Number,
 				default: 18
+			},
+			sex: {
+				type: String,
+				default: '男'
 			}
 		},
 	}

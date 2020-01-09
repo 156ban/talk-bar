@@ -98,7 +98,10 @@
 		  }
 		},
         computed: {
-			
+			...mapState('friend', [
+			    'friendListData',
+				'friendDetailTarget'
+			  ])
         },
         methods: {
             goMessageDetail() {
@@ -108,6 +111,9 @@
 			}
         },
 		components:{
+		},
+		onLoad() {
+			this.$store.dispatch("friend/getFriendDetailData");
 		}
     }
 </script>
