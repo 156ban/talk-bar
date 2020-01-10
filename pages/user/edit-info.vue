@@ -24,23 +24,26 @@
 				<view class="form-item" style="margin-top: 40rpx;">
 					<view class="form-item-label">性别</view>
 					<view class="form-item-element">
-						<radio-group name="gender">
+						<radio-group name="gender" @change="radioChange">
 							<label>
-								<radio class="form-item-radio" value="男" /><text>男</text>
+								<radio :checked="sex === '男'" class="form-item-radio" value="男" /><text>男</text>
 							</label>
 							<label>
-								<radio class="form-item-radio" value="女" /><text>女</text>
+								<radio :checked="sex === '女'" class="form-item-radio" value="女" /><text>女</text>
 							</label>
 						</radio-group>
 					</view>
 				</view>
-				<view class="form-item">
-					<view class="form-item-label">地址</view>
+				<view class="form-item" @tap="showProvince">
+					<view class="form-item-label">省</view>
 					<view class="form-item-element">
-						<input 
-						  class="uni-input" 
-						  name="nickname" 
-						  placeholder="请输入签名" />
+						{{province.label}}
+					</view>
+				</view>
+				<view class="form-item" @tap="showCity">
+					<view class="form-item-label">市</view>
+					<view class="form-item-element">
+						{{city.label}}
 					</view>
 				</view>
 				<view class="form-item">
@@ -54,6 +57,16 @@
 				</view>
 			</form>
 		</view>
+		<mpvue-picker
+			:themeColor="themeColor"
+			ref="mpvuePicker"
+			:mode="mode"
+			:deepLength="deepLength"
+			:pickerValueDefault="pickerValueDefault"
+			@onConfirm="onConfirm"
+			@onCancel="onCancel"
+			:pickerValueArray="pickerValueArray"
+		></mpvue-picker>
 	</view>
 </template>
 
@@ -61,26 +74,60 @@
     import { mapState } from 'vuex'
 	import  infoCard from '@/components/aa-my-com/info-card.vue'
 	import  navBar from '@/components/aa-my-com/nav-bar.vue'
+	import mpvuePicker from '@/components/mpvue-picker/mpvuePicker.vue'
     export default {
 		data() {
 			return {
 				navTitle:"消息",
-				city: '北京',
-				MockData:[{userName:"王",
-				           title:"这是人名",
-						   time:"下午1:00",
-						   info:"人生不满百，常怀千岁忧",
-						   messageNum:"18"}],
 				sex:"男",
+				pickerValueArray: [
+					{
+						label: '北京市',
+						value: 110000
+					},
+					{
+						label: '天津市',
+						value: 120000
+					},
+					{
+						label: '广州市',
+						value: 440100
+					},
+					{
+						label: '深圳市',
+						value: 440300
+					}
+				],
+				themeColor: '#007AFF',
+				mode: '',
+				deepLength: 1,
+				pickerValueDefault: [0],
+				province:{},
+				city: {},
+				whichSelect:"province",
 			}
 		},
         computed: {
 		    ...mapState('message', [
 		        'messageListData',
 		      ]),
+			...mapState([
+			    'addressData'
+			  ]),
+			  cityData() {
+				  let answer = [];
+				  this.addressData.forEach((item)=>{
+					 if(item.value === this.province.value) {
+						 answer = item.children;
+					 }
+				  })
+				  return answer;
+			  }
 	    },
 		components:{
-			infoCard,navBar
+			infoCard,
+			navBar,
+			mpvuePicker
 		},
 		methods:{
 			formSubmit: function(e) {
@@ -102,7 +149,43 @@
 			},
 			formReset: function(e) {
 				console.log('清空数据')
-			}
+			},
+			ss() {
+			},
+			radioChange(e) {
+				this.sex = e.detail.value;
+				console.log(this.sex)
+			},
+			onConfirm(e) {
+				console.log(e);
+				
+				if(this.whichSelect === "province") {
+					this.province = {value:e.value[0],label:e.label};
+				} else if(this.whichSelect === "city") {
+					this.city = {value:e.value[0],label:e.label};
+				} else if(this.whichSelect ==="xingZuo") {
+					
+				}
+			},
+			onCancel(e) {
+				console.log(e);
+			},
+			showProvince() {
+				this.pickerValueArray = this.addressData;
+				this.whichSelect = "province"
+				this.mode = 'selector';
+				this.deepLength = 1;
+				this.pickerValueDefault = [0];
+				this.$refs.mpvuePicker.show();
+			},
+			showCity() {
+				this.whichSelect = "city";
+				this.mode = 'selector';
+				this.pickerValueArray = this.cityData;
+				this.deepLength = 1;
+				this.pickerValueDefault = [0];
+				this.$refs.mpvuePicker.show();
+			},
 		},
 		onLoad() {
 			

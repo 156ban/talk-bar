@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import friend from './modules/friend'
 import message from './modules/message'
+import addressData from '@/static/address'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
@@ -10,7 +11,8 @@ const store = new Vuex.Store({
          */
         forcedLogin: false,
         hasLogin: false,
-        userName: ""
+        userName: "",
+		addressData:addressData
     },
 	actions:{
 		
