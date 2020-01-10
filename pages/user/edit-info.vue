@@ -2,8 +2,8 @@
 	<view class="hole edit-info">
 		<view class="uni-form">
 			<form @submit="formSubmit" @reset="formReset">
-				<view class="form-item" style="margin-top: 40rpx;">
-					<view class="form-item-label">姓名</view>
+				<view hover-class="press-on" class="form-item" style="margin-top: 40rpx;">
+					<view  class="form-item-label">姓名</view>
 					<view class="form-item-element">
 						<input 
 						  class="uni-input" 
@@ -11,7 +11,7 @@
 						  placeholder="请输入姓名" />
 					</view>
 				</view>
-				<view class="form-item">
+				<view hover-class="press-on" class="form-item">
 					<view class="form-item-label">签名</view>
 					<view class="form-item-element">
 						<input 
@@ -20,8 +20,13 @@
 						  placeholder="请输入签名" />
 					</view>
 				</view>
-				
-				<view class="form-item" style="margin-top: 40rpx;">
+				<view style="margin-top: 40rpx;" hover-class="press-on" class="form-item" @tap="showProvince">
+					<view class="form-item-label">年龄</view>
+					<view class="form-item-element">
+						{{province.label}}
+					</view>
+				</view>
+				<view hover-class="press-on" class="form-item" >
 					<view class="form-item-label">性别</view>
 					<view class="form-item-element">
 						<radio-group name="gender" @change="radioChange">
@@ -34,20 +39,39 @@
 						</radio-group>
 					</view>
 				</view>
-				<view class="form-item" @tap="showProvince">
+				<view hover-class="press-on" class="form-item" @tap="showProvince">
 					<view class="form-item-label">省</view>
 					<view class="form-item-element">
 						{{province.label}}
 					</view>
 				</view>
-				<view class="form-item" @tap="showCity">
+				<view hover-class="press-on" class="form-item" @tap="showCity">
 					<view class="form-item-label">市</view>
 					<view class="form-item-element">
 						{{city.label}}
 					</view>
 				</view>
-				<view class="form-item">
+				<view hover-class="press-on" class="form-item">
 					<view class="form-item-label">星座</view>
+					<view class="form-item-element">
+						<input 
+						  class="uni-input" 
+						  name="nickname" 
+						  placeholder="请输入签名" />
+					</view>
+				</view>
+				
+				<view hover-class="press-on" class="form-item">
+					<view class="form-item-label">新密码</view>
+					<view class="form-item-element">
+						<input 
+						  class="uni-input" 
+						  name="nickname" 
+						  placeholder="请输入签名" />
+					</view>
+				</view>
+				<view hover-class="press-on" class="form-item">
+					<view class="form-item-label">确认</view>
 					<view class="form-item-element">
 						<input 
 						  class="uni-input" 
@@ -179,6 +203,10 @@
 				this.$refs.mpvuePicker.show();
 			},
 			showCity() {
+				if(!this.province.value) {
+					uni.showToast({title:"请先选择省份", icon:"none"});
+					return
+				}
 				this.whichSelect = "city";
 				this.mode = 'selector';
 				this.pickerValueArray = this.cityData;

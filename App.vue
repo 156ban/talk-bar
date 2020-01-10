@@ -55,7 +55,7 @@
 		display: flex;
 	}
    .press-on {
-       background-color: #d6d6d6;
+       background-color: #efeff4;
    }
     .hole {
 		background-color: #efeff4;

@@ -5,8 +5,8 @@
 				<view class="person-card-top">
 					<view class="person-card-title">{{title}}</view>
 				</view>
-				<view class="person-card-bottom"> 
-				    <view class="person-card-age">
+				<view  class="person-card-bottom"> 
+				    <view :style="{'background-color':(sex==='男')?'#0ce1f7':'pink'}" class="person-card-age">
 				    	{{sex}} {{age}}
 				    </view>
 					<view class="person-card-address">
@@ -107,8 +107,5 @@
 			   margin-left: 20rpx;
 			}
 		}
-	}
-	.press-on {
-	    background-color: #d6d6d6;
 	}
 </style>

@@ -119,7 +119,4 @@
 			}
 		}
 	}
-	.press-on {
-	    background-color: #efeff4;
-	}
 </style>

@@ -97,9 +97,6 @@
   	flex: 1;
   	flex-direction: column;
   }
-  .press-on {
-      background-color: #dde1e8;
-  }
 }
 
 </style>

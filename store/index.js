@@ -12,9 +12,13 @@ const store = new Vuex.Store({
         forcedLogin: false,
         hasLogin: false,
         userName: "",
-		addressData:addressData
+		addressData:addressData,
+		
     },
 	actions:{
+		regist({ dispatch, commit }, params) {
+		    state.messageListData = prop;
+		},
 		
 	},
     mutations: {
@@ -25,7 +29,8 @@ const store = new Vuex.Store({
         logout(state) {
             state.userName = "";
             state.hasLogin = false;
-        }
+        },
+		
     },
 	modules: {
 		friend,

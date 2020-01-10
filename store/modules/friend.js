@@ -43,11 +43,15 @@ const actions = {
 		});
 	},
 	getNewFriendListData({ dispatch, commit }, params) {
-		let mockData=[{
-				  userName:"花",
-				  title:"桃花仙人",
-				  info:"本来无一物，何处惹尘埃",
-			  }]
+		let mockData=[
+				  {
+				    userName:"王",
+					title:"朱高帜",
+					sex:"女",
+					age:"25",
+					address:"美国 家里蹲",
+				  },
+			  ]
 		commit("setNewFriendListData",mockData);
 	},
 	addNewFrend({ dispatch, commit }, params) {
