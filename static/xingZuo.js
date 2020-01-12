@@ -1,0 +1,51 @@
+const xingZuoData = [
+	{
+		label:"白羊座",
+		value:"barYang"
+	},
+	{
+		label:"金牛座",
+		value:"jinNiu"
+	},
+	{
+		label:"双子座",
+		value:"shuangZi"
+	},
+	{
+		label:"巨蟹座",
+		value:"juXie"
+	},
+	{
+		label:"狮子座",
+		value:"shiZi"
+	},
+	{
+		label:"处女座",
+		value:"chuNv"
+	},
+	{
+		label:"天秤座",
+		value:"tianPing"
+	},{
+		label:"天蝎座",
+		value:"tianXie"
+	},
+	{
+		label:"射手座",
+		value:"sheShou"
+	},
+	{
+		label:"摩羯座",
+		value:"moJie"
+	},
+	{
+		label:"水瓶座",
+		value:"shuiPing"
+	},
+	{
+		label:"双鱼座",
+		value:"shuangYu"
+	},
+]
+
+export default xingZuoData

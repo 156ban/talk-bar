@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import friend from './modules/friend'
 import message from './modules/message'
 import addressData from '@/static/address'
+import xingZuoData from '@/static/xingZuo'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
@@ -13,13 +14,15 @@ const store = new Vuex.Store({
         hasLogin: false,
         userName: "",
 		addressData:addressData,
-		
+		xingZuoData:xingZuoData,
     },
 	actions:{
 		regist({ dispatch, commit }, params) {
 		    state.messageListData = prop;
 		},
-		
+		subUserInfo({ dispatch, commit }, params) {
+		    console.log("上传用户信息");
+		},
 	},
     mutations: {
         login(state, userName) {

@@ -7,6 +7,7 @@
 					<view class="form-item-element">
 						<input 
 						  class="uni-input" 
+						  v-model="userData.name"
 						  name="nickname" 
 						  placeholder="请输入姓名" />
 					</view>
@@ -16,25 +17,30 @@
 					<view class="form-item-element">
 						<input 
 						  class="uni-input" 
-						  name="nickname" 
+						  name="nickname"
+						  v-model="userData.saying"
 						  placeholder="请输入签名" />
 					</view>
 				</view>
-				<view style="margin-top: 40rpx;" hover-class="press-on" class="form-item" @tap="showProvince">
+				<view style="margin-top: 40rpx;" hover-class="press-on" class="form-item">
 					<view class="form-item-label">年龄</view>
 					<view class="form-item-element">
-						{{province.label}}
+						<input 
+						  class="uni-input" 
+						  name="nickname" 
+						  v-model="userData.age"
+						  placeholder="请输入年龄" />
 					</view>
 				</view>
 				<view hover-class="press-on" class="form-item" >
 					<view class="form-item-label">性别</view>
 					<view class="form-item-element">
-						<radio-group name="gender" @change="radioChange">
+						<radio-group v-model="userData.sex" name="gender" @change="radioChange">
 							<label>
-								<radio :checked="sex === '男'" class="form-item-radio" value="男" /><text>男</text>
+								<radio class="form-item-radio" value="男" /><text>男</text>
 							</label>
 							<label>
-								<radio :checked="sex === '女'" class="form-item-radio" value="女" /><text>女</text>
+								<radio class="form-item-radio" value="女" /><text>女</text>
 							</label>
 						</radio-group>
 					</view>
@@ -42,22 +48,19 @@
 				<view hover-class="press-on" class="form-item" @tap="showProvince">
 					<view class="form-item-label">省</view>
 					<view class="form-item-element">
-						{{province.label}}
+						{{userData.province.label}}
 					</view>
 				</view>
 				<view hover-class="press-on" class="form-item" @tap="showCity">
 					<view class="form-item-label">市</view>
 					<view class="form-item-element">
-						{{city.label}}
+						{{userData.city.label}}
 					</view>
 				</view>
-				<view hover-class="press-on" class="form-item">
+				<view hover-class="press-on" class="form-item" @tap="showXingZuo">
 					<view class="form-item-label">星座</view>
 					<view class="form-item-element">
-						<input 
-						  class="uni-input" 
-						  name="nickname" 
-						  placeholder="请输入签名" />
+						{{userData.xingZuo.label}}
 					</view>
 				</view>
 				
@@ -67,7 +70,8 @@
 						<input 
 						  class="uni-input" 
 						  name="nickname" 
-						  placeholder="请输入签名" />
+						  v-model="userData.passowrd"
+						  placeholder="请输入密码" />
 					</view>
 				</view>
 				<view hover-class="press-on" class="form-item">
@@ -76,8 +80,12 @@
 						<input 
 						  class="uni-input" 
 						  name="nickname" 
-						  placeholder="请输入签名" />
+						  v-model="userData.rePassowrd"
+						  placeholder="再次输入密码" />
 					</view>
+				</view>
+				<view style="margin-top: 40rpx;" class="">
+					<button @tap="submit()" type="primary">保存</button>
 				</view>
 			</form>
 		</view>
@@ -126,9 +134,18 @@
 				mode: '',
 				deepLength: 1,
 				pickerValueDefault: [0],
-				province:{},
-				city: {},
 				whichSelect:"province",
+				userData:{
+					province:{},
+					xingZuo:{},
+					province:{},
+					city: {},
+					name:"",
+					saying:"",
+					sex:"",
+					password:"",
+					rePassword:""
+				}
 			}
 		},
         computed: {
@@ -136,7 +153,8 @@
 		        'messageListData',
 		      ]),
 			...mapState([
-			    'addressData'
+			    'addressData',
+				'xingZuoData'
 			  ]),
 			  cityData() {
 				  let answer = [];
@@ -182,13 +200,12 @@
 			},
 			onConfirm(e) {
 				console.log(e);
-				
 				if(this.whichSelect === "province") {
-					this.province = {value:e.value[0],label:e.label};
+					this.userData.province = {value:e.value[0],label:e.label};
 				} else if(this.whichSelect === "city") {
-					this.city = {value:e.value[0],label:e.label};
+					this.userData.city = {value:e.value[0],label:e.label};
 				} else if(this.whichSelect ==="xingZuo") {
-					
+					this.userData.xingZuo = {value:e.value[0],label:e.label};
 				}
 			},
 			onCancel(e) {
@@ -203,7 +220,7 @@
 				this.$refs.mpvuePicker.show();
 			},
 			showCity() {
-				if(!this.province.value) {
+				if(!this.userData.province.value) {
 					uni.showToast({title:"请先选择省份", icon:"none"});
 					return
 				}
@@ -214,9 +231,23 @@
 				this.pickerValueDefault = [0];
 				this.$refs.mpvuePicker.show();
 			},
+			showXingZuo() {
+				this.whichSelect = "xingZuo";
+				this.mode = 'selector';
+				this.pickerValueArray = this.xingZuoData;
+				this.deepLength = 1;
+				this.pickerValueDefault = [0];
+				this.$refs.mpvuePicker.show();
+			},
+			submit() {
+				console.log(this.userData)
+				this.$store.dispatch("subUserInfo");
+			}
 		},
 		onLoad() {
 			
+		},
+		onUnload() {
 		}
     }
 </script>
