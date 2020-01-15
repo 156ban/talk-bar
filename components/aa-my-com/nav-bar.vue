@@ -20,7 +20,7 @@
 		<uni-popup ref="showpopup" type="center" >
 			<view class="popup-content">
 				<button @tap="redirectTo">注销</button>
-				<button @tap="redirectTo">修改密码</button>
+				<!-- <button @tap="redirectTo">修改密码</button> -->
 			</view>
 		</uni-popup>
 	</view>

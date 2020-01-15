@@ -159,7 +159,7 @@
 			  cityData() {
 				  let answer = [];
 				  this.addressData.forEach((item)=>{
-					 if(item.value === this.province.value) {
+					 if(item.value === this.userData.province.value) {
 						 answer = item.children;
 					 }
 				  })
