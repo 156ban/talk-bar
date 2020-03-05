@@ -8,7 +8,9 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
-
+require('./api/model/db');
+var login = require('./api/routes/public/login');
+app.use('/api/login',login)
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -37,5 +39,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-app.listen(8080, () => console.log('Example app listening on port 3000!'))
+app.listen(8080, () => console.log('Example app listening on port 8080!'))
 module.exports = app;
