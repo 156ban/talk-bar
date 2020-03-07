@@ -53,4 +53,4 @@ process.on('SIGTERM',function() {
     });
 });
  
-require('./admin/login');
+require('./admin/user');
