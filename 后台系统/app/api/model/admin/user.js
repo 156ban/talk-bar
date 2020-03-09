@@ -2,16 +2,21 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
  
-var loginSchema = new Schema({
+var userData = new Schema({
     ID: {
         type: String,
-        require: true
     },
     password: {
         type: String,
-        require: true
-    }
+    },
+	province:String,
+	xingZuo:String,
+	province:String,
+	name:String,
+	age:String,
+	saying:String,
+	sex:String,
 });
  
 
-module.exports = mongoose.model('user',loginSchema,'user');
+module.exports = mongoose.model('user',userData,'user');

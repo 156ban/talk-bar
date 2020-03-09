@@ -141,6 +141,7 @@
 					province:{},
 					city: {},
 					name:"",
+					age:"",
 					saying:"",
 					sex:"",
 					password:"",
