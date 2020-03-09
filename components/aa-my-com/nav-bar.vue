@@ -12,7 +12,7 @@
 				<button 
 				  class="button" 
 				  @click="togglePopup('center', 'popup')">
-				  {{name}}
+				  {{userName || "杨洋"}}
 				</button>
 			</view>
 		  </block>
@@ -30,12 +30,18 @@
 	import uniCollapseItem from '@/components/uni-collapse-item/uni-collapse-item.vue'
 	import uniCollapse from '@/components/uni-collapse/uni-collapse.vue'
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
+	import { mapState } from 'vuex'
 	export default {
 		data() {
 			return {
 				title:"消息",
 				name:"杨洋"
 			}
+		},
+		computed:{
+			...mapState([
+			        'userName'
+			      ]),
 		},
 		props:{
 		  navTitle: {

@@ -13,6 +13,7 @@ const store = new Vuex.Store({
         forcedLogin: false,
         hasLogin: false,
         userName: "",
+		ID:"",
 		addressData:addressData,
 		xingZuoData:xingZuoData,
     },
@@ -25,8 +26,9 @@ const store = new Vuex.Store({
 		},
 	},
     mutations: {
-        login(state, userName) {
-            state.userName = userName || '新用户';
+        login(state, prop) {
+            state.userName = prop.name || '新用户';
+			state.ID = prop.ID || 123456;
             state.hasLogin = true;
         },
         logout(state) {

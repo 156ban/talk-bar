@@ -48,19 +48,19 @@
 				<view hover-class="press-on" class="form-item" @tap="showProvince">
 					<view class="form-item-label">省</view>
 					<view class="form-item-element">
-						{{userData.province.label}}
+						{{userData.province}}
 					</view>
 				</view>
 				<view hover-class="press-on" class="form-item" @tap="showCity">
 					<view class="form-item-label">市</view>
 					<view class="form-item-element">
-						{{userData.city.label}}
+						{{userData.city}}
 					</view>
 				</view>
 				<view hover-class="press-on" class="form-item" @tap="showXingZuo">
 					<view class="form-item-label">星座</view>
 					<view class="form-item-element">
-						{{userData.xingZuo.label}}
+						{{userData.xingZuo}}
 					</view>
 				</view>
 				
@@ -136,10 +136,11 @@
 				pickerValueDefault: [0],
 				whichSelect:"province",
 				userData:{
-					province:{},
-					xingZuo:{},
-					province:{},
-					city: {},
+					ID:this.ID,
+					province:"",
+					xingZuo:"",
+					province:"",
+					city: "",
 					name:"",
 					age:"",
 					saying:"",
@@ -155,15 +156,17 @@
 		      ]),
 			...mapState([
 			    'addressData',
-				'xingZuoData'
+				'xingZuoData',
+				'ID'
 			  ]),
 			  cityData() {
 				  let answer = [];
 				  this.addressData.forEach((item)=>{
-					 if(item.value === this.userData.province.value) {
+					 if(item.label === this.userData.province) {
 						 answer = item.children;
 					 }
 				  })
+				  console.log(answer);
 				  return answer;
 			  }
 	    },
@@ -196,17 +199,17 @@
 			ss() {
 			},
 			radioChange(e) {
-				this.sex = e.detail.value;
+				this.userData.sex = e.detail.value;
 				console.log(this.sex)
 			},
 			onConfirm(e) {
 				console.log(e);
 				if(this.whichSelect === "province") {
-					this.userData.province = {value:e.value[0],label:e.label};
+					this.userData.province = e.label;
 				} else if(this.whichSelect === "city") {
-					this.userData.city = {value:e.value[0],label:e.label};
+					this.userData.city = e.label;
 				} else if(this.whichSelect ==="xingZuo") {
-					this.userData.xingZuo = {value:e.value[0],label:e.label};
+					this.userData.xingZuo = e.label;
 				}
 			},
 			onCancel(e) {
@@ -221,7 +224,7 @@
 				this.$refs.mpvuePicker.show();
 			},
 			showCity() {
-				if(!this.userData.province.value) {
+				if(!this.userData.province) {
 					uni.showToast({title:"请先选择省份", icon:"none"});
 					return
 				}
@@ -241,9 +244,45 @@
 				this.$refs.mpvuePicker.show();
 			},
 			submit() {
-				console.log(this.userData)
+				console.log(this.ID)
 				this.$store.dispatch("subUserInfo");
-			}
+				this.editRequest();
+			},
+			editRequest() {
+				this.loading = true;
+				this.userData['ID'] = this.ID;
+				uni.request({
+					url: "http://localhost:8080/user/chUserInfo",
+					method:'get',
+					data: this.userData
+				}).then(res => {
+					
+					console.log('request success', res[1].data);
+					if(res[1].data.code == 0) {
+						uni.showToast({
+							title: res[1].data.msg,
+							icon: 'none',
+							// mask: true,
+						});
+					} else {
+						uni.showToast({
+							title: res[1].data.msg,
+							icon: 'none',
+							// mask: true,
+						});
+					}
+					
+					this.loading = false;
+				}).catch(err => {
+					console.log('request fail', err);
+					uni.showModal({
+						content: err.errMsg,
+						showCancel: false
+					});
+			        
+					this.loading = false;
+				});
+			},
 		},
 		onLoad() {
 			

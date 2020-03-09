@@ -3,7 +3,7 @@
         <view class="input-group">
             <view class="input-row border">
                 <text class="title">账号：</text>
-                <m-input class="m-input" type="text" clearable focus v-model="account" placeholder="请输入账号"></m-input>
+                <m-input class="m-input" type="text" clearable focus v-model="ID" placeholder="请输入账号"></m-input>
             </view>
             <view class="input-row">
                 <text class="title">密码：</text>
@@ -11,7 +11,7 @@
             </view>
         </view>
         <view class="btn-row">
-            <button type="primary" class="primary" @tap="bindLogin">登录</button>
+            <button type="primary" class="primary" :loading="loading" @tap="bindLogin">登录</button>
         </view>
         <view class="action-row">
             <navigator url="../reg/reg">注册账号</navigator>
@@ -42,9 +42,10 @@
             return {
                 providerList: [],
                 hasProvider: false,
-                account: '',
+                ID: '',
                 password: '',
-                positionTop: 0
+                positionTop: 0,
+				loading:false
             }
         },
         computed: mapState(['forcedLogin']),
@@ -84,41 +85,68 @@
                  * 客户端对账号信息进行一些必要的校验。
                  * 实际开发中，根据业务需要进行处理，这里仅做示例。
                  */
-                if (this.account.length < 5) {
-                    uni.showToast({
-                        icon: 'none',
-                        title: '账号最短为 5 个字符'
-                    });
-                    return;
-                }
-                if (this.password.length < 6) {
-                    uni.showToast({
-                        icon: 'none',
-                        title: '密码最短为 6 个字符'
-                    });
-                    return;
-                }
+                // if (this.ID.length < 5) {
+                //     uni.showToast({
+                //         icon: 'none',
+                //         title: '账号最短为 5 个字符'
+                //     });
+                //     return;
+                // }
+                // if (this.password.length < 6) {
+                //     uni.showToast({
+                //         icon: 'none',
+                //         title: '密码最短为 6 个字符'
+                //     });
+                //     return;
+                // }
                 /**
                  * 下面简单模拟下服务端的处理
                  * 检测用户账号密码是否在已注册的用户列表中
                  * 实际开发中，使用 uni.request 将账号信息发送至服务端，客户端在回调函数中获取结果信息。
                  */
-                const data = {
-                    account: this.account,
-                    password: this.password
-                };
-                const validUser = service.getUsers().some(function (user) {
-                    return data.account === user.account && data.password === user.password;
-                });
-                if (validUser) {
-                    this.toMain(this.account);
-                } else {
-                    uni.showToast({
-                        icon: 'none',
-                        title: '用户账号或密码不正确',
-                    });
-                }
+                this.loginRequest();
             },
+			loginRequest() {
+				this.loading = true;
+				uni.request({
+					url: "http://localhost:8080/user/login",
+					method:'get',
+					data: {ID:this.ID,password:this.password}
+				}).then(res => {
+					
+					console.log('request success', res[1].data);
+					if(res[1].data.code == 0) {
+						this.$store.commit('login',res[1].data.data)
+						uni.showToast({
+							title: res[1].data.msg,
+							icon: 'none',
+							// mask: true,
+						});
+						this.goFriend();
+					} else {
+						uni.showToast({
+							title: res[1].data.msg,
+							icon: 'none',
+							// mask: true,
+						});
+					}
+					
+					this.loading = false;
+				}).catch(err => {
+					console.log('request fail', err);
+					uni.showModal({
+						content: err.errMsg,
+						showCancel: false
+					});
+			        
+					this.loading = false;
+				});
+			},
+			goFriend() {
+				uni.switchTab({
+				    url: '../message/message',
+				});
+			},
             oauth(value) {
                 uni.login({
                     provider: value,

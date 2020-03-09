@@ -9,7 +9,7 @@ router.get('/login',controllerLogin);
 
 router.get('/regist', controllerRegist);
 
-router.get('/chUserInfo', controllerChUserInfo);
+router.get('/ChUserInfo', controllerChUserInfo);
 
 router.get('/logout', controllerLogout);
 module.exports = router;

@@ -7,7 +7,7 @@ module.exports = function(req,res) {
 	var password = req.query.password;
 	if(!ID || !password) {
 		console.log("账号或密码不能为空");
-		common.sendResponse(res, 500, "账号或密码不能为空");
+		common.sendResponse(res, 200,1,"账号或密码不能为空");
 		return;
 	}
     user.find({'ID':ID},function(err,data) {
@@ -19,15 +19,15 @@ module.exports = function(req,res) {
 		if(!data.length) {
 			console.log(data);
 			console.log("查无此人");
-			common.sendResponse(res, 200, "查无此人");
+			common.sendResponse(res, 200,1,"查无此人");
 		} else {
 			if(data[0].password==password)
 			{
 				console.log(data);
-				common.sendResponse(res, 200, "欢迎您,"+data[0].name);
+				common.sendResponse(res, 200,0,"登陆成功",data[0]);
 			} else {
 				console.log(data);
-				common.sendResponse(res, 200, "密码错误");
+				common.sendResponse(res, 200, 1,"密码错误");
 			}
 		}
     })
