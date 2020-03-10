@@ -12,6 +12,7 @@ var userData = new Schema({
 	province:String,
 	xingZuo:String,
 	province:String,
+	city:String,
 	name:String,
 	age:String,
 	saying:String,

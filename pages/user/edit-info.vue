@@ -37,10 +37,10 @@
 					<view class="form-item-element">
 						<radio-group v-model="userData.sex" name="gender" @change="radioChange">
 							<label>
-								<radio class="form-item-radio" value="男" /><text>男</text>
+								<radio class="form-item-radio" :checked="userData.sex==='男'" value="男" /><text>男</text>
 							</label>
 							<label>
-								<radio class="form-item-radio" value="女" /><text>女</text>
+								<radio class="form-item-radio" :checked="userData.sex==='女'" value="女" /><text>女</text>
 							</label>
 						</radio-group>
 					</view>
@@ -70,7 +70,7 @@
 						<input 
 						  class="uni-input" 
 						  name="nickname" 
-						  v-model="userData.passowrd"
+						  v-model="userData.newPassword"
 						  placeholder="请输入密码" />
 					</view>
 				</view>
@@ -80,7 +80,7 @@
 						<input 
 						  class="uni-input" 
 						  name="nickname" 
-						  v-model="userData.rePassowrd"
+						  v-model="userData.rePassword"
 						  placeholder="再次输入密码" />
 					</view>
 				</view>
@@ -136,16 +136,16 @@
 				pickerValueDefault: [0],
 				whichSelect:"province",
 				userData:{
-					ID:this.ID,
+					ID:"",
 					province:"",
 					xingZuo:"",
 					province:"",
-					city: "",
+					city:"",
 					name:"",
 					age:"",
 					saying:"",
 					sex:"",
-					password:"",
+					newPassword:"",
 					rePassword:""
 				}
 			}
@@ -246,6 +246,25 @@
 			submit() {
 				console.log(this.ID)
 				this.$store.dispatch("subUserInfo");
+				console.log(this.userData);
+				if(this.userData.newPassword!=="" || this.userData.rePassword!=="")
+				{   
+					if(this.userData.newPassword.length<6) {
+						uni.showToast({
+							title: "密码不能小于6位",
+							icon: 'none',
+							// mask: true,
+						});
+						return;
+					} else if(this.userData.newPassword !== this.userData.rePassword) {
+						uni.showToast({
+							title: "两次输入密码不一致",
+							icon: 'none',
+							// mask: true,
+						});
+						return;
+					} 
+				}
 				this.editRequest();
 			},
 			editRequest() {
@@ -264,6 +283,49 @@
 							icon: 'none',
 							// mask: true,
 						});
+						this.getRequest();
+					} else {
+						uni.showToast({
+							title: res[1].data.msg,
+							icon: 'none',
+							// mask: true,
+						});
+					}
+					
+					this.loading = false;
+				}).catch(err => {
+					console.log('request fail', err);
+					uni.showModal({
+						content: err.errMsg,
+						showCancel: false
+					});
+			        
+					this.loading = false;
+				});
+			},
+			getRequest() {
+				this.loading = true;
+				this.userData['ID'] = this.ID;
+				uni.request({
+					url: "http://localhost:8080/user/getUserInfo",
+					method:'get',
+					data: {ID:this.ID}
+				}).then(res => {
+					
+					console.log('request success', res[1].data);
+					if(res[1].data.code == 0) {
+						uni.showToast({
+							title: res[1].data.msg,
+							icon: 'none',
+							// mask: true,
+						});
+						for(let key in this.userData) {
+							if(res[1].data.data[key]) {
+								this.userData[key] = res[1].data.data[key];
+							}
+						}
+						this.userData.newPassword="",
+						this.userData.rePassword=""
 					} else {
 						uni.showToast({
 							title: res[1].data.msg,
@@ -285,7 +347,7 @@
 			},
 		},
 		onLoad() {
-			
+			this.getRequest();
 		},
 		onUnload() {
 		}
