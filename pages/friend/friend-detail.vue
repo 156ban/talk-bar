@@ -9,7 +9,7 @@
 			<view class="friend-detail-top-right">
 				<view class="friend-detail-top-right-top">
 					<view class="user-name">
-						{{userName}}
+						{{userData.name}}
 					</view>
 					<view class="dian-zan">
 						<uni-icons
@@ -25,10 +25,10 @@
 					</view>
 				</view>
 				<view class="friend-detail-top-right-middle">
-					QQ: {{qqNumber}}
+					QQ: {{userData.ID}}
 				</view>
 				<view class="friend-detail-top-right-bottom">
-					{{sex}} {{address}} {{xingZuo}}
+					{{userData.sex}} {{userData.province}}-{{userData.city}} {{userData.xingZuo}}
 				</view>
 			</view>
     	</view>
@@ -41,7 +41,7 @@
 					 color="#666666" />
 				</view>
 				<text class="">
-					{{qianMing}}
+					{{userData.saying}}
 				</text>
 				<view class="edit-icon-right">
 					<uni-icons
@@ -59,7 +59,7 @@
 					 color="#666666" />
 				</view>
 				<text class="">
-					{{qianMing}}
+					{{userData.saying}}
 				</text>
 				<view class="edit-icon-right">
 					<uni-icons
@@ -97,14 +97,30 @@
 			  dianZanNum:12345,
 			  qianMing:"wia",
 			  isFriend:true,
-			  isUser:true
+			  isUser:true,
+			  userData:{
+			  	ID:"",
+			  	province:"",
+			  	xingZuo:"",
+			  	province:"",
+			  	city:"",
+			  	name:"",
+			  	age:"",
+			  	saying:"",
+			  	sex:"",
+			  	newPassword:"",
+			  	rePassword:""
+			  }
 		  }
 		},
         computed: {
 			...mapState('friend', [
 			    'friendListData',
 				'friendDetailTarget'
-			  ])
+			  ]),
+			...mapState([
+				'ID'
+			  ]),
         },
         methods: {
             goMessageDetail() {
@@ -116,12 +132,55 @@
 				uni.navigateTo({
 					url: '../user/edit-info'
 				});
-			}
+			},
+			getRequest() {
+				this.loading = true;
+				this.userData['ID'] = this.ID;
+				uni.request({
+					url: "http://localhost:8080/user/getUserInfo",
+					method:'get',
+					data: {ID:this.ID}
+				}).then(res => {
+					
+					console.log('request success', res[1].data);
+					if(res[1].data.code == 0) {
+						uni.showToast({
+							title: res[1].data.msg,
+							icon: 'none',
+							// mask: true,
+						});
+						for(let key in this.userData) {
+							if(res[1].data.data[key]) {
+								this.userData[key] = res[1].data.data[key];
+							}
+						}
+						this.userData.newPassword="",
+						this.userData.rePassword=""
+					} else {
+						uni.showToast({
+							title: res[1].data.msg,
+							icon: 'none',
+							// mask: true,
+						});
+					}
+					
+					this.loading = false;
+				}).catch(err => {
+					console.log('request fail', err);
+					uni.showModal({
+						content: err.errMsg,
+						showCancel: false
+					});
+			        
+					this.loading = false;
+				});
+			},
         },
 		components:{
 		},
 		onLoad() {
 			this.$store.dispatch("friend/getFriendDetailData");
+			this.getRequest();
 		}
     }
 </script>
