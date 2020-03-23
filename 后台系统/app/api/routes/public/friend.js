@@ -1,10 +1,12 @@
 var express = require('express');
 var conFriendList = require('../../controller/friend/getFriendList');
-var conAddfriend = require('../../controller/friend/addfriend');
-var conDelfriend = require('../../controller/friend/delfriend');
+var conAnalFriend = require('../../controller/friend/analFriend');
+var conAddFriend = require('../../controller/friend/addFriend');
+var conDelFriend = require('../../controller/friend/delFriend');
 var router = express.Router();
 /* GET users listing. */
-router.get('/getfriendList',conFriendList);
-router.get('/addfriend',conAddfriend);
-router.get('/delfriend',conDelfriend);
+router.get('/getFriendList',conFriendList);
+router.get('/analFriend',conAnalFriend);
+router.get('/addFriend',conAddFriend);
+router.get('/delFriend',conDelFriend);
 module.exports = router;

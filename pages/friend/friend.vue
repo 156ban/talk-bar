@@ -12,17 +12,14 @@
 		<view class="friend-card-group">
 			<view 
 				v-for="(item,index) in friendListData"
-				 @tap="goDetail()"
+				 @tap="goDetail(item.ID)"
 				 :key="index">
 				 <friend-card
-				   :userName="item.userName"
-				   :title="item.title"
-				   :info="item.info">
+				   :userName="item.name"
+				   :title="item.name"
+				   :info="item.saying">
 				 </friend-card>
 			</view>
-			<friend-card></friend-card>
-			<friend-card></friend-card>
-			<friend-card></friend-card>
 		</view>
     </view>
 </template>
@@ -38,6 +35,7 @@
 		data(){
 		  return {
 			  navTitle:"联系人",
+			  friendListData:[],
 			  mockData:[{
 				  userName:"花",
 				  title:"桃花仙人",
@@ -46,27 +44,46 @@
 		  }
 		},
         computed: {
-			...mapState('friend', [
-			    'friendListData',
+			// ...mapState('friend', [
+			//     'friendListData',
+			//   ]),
+			...mapState([
+				'ID'
 			  ]),
         },
         methods: {
-            goDetail() {
+            goDetail(ID) {
             	uni.navigateTo({
-            		url: '../friend/friend-detail'
+            		url: '../friend/friend-detail?ID='+ID
             	});
             },
 			goNewFriend() {
 				uni.navigateTo({
 					url: '../friend/new-friend'
 				});
+			},
+			getFriendList() {
+				this.$get('/friend/getfriendList',{ID:this.ID})
+				.then((value)=>{
+					this.friendListData = value.data;
+					uni.showToast({
+						title: value.msg,
+						icon: 'none',
+						// mask: true,
+					});
+				}).catch((reason)=>{
+					uni.showModal({
+						content: reason,
+						showCancel: false
+					});
+				})
 			}
         },
 		components:{
 			navBar,friendCard
 		},
-		onLoad() {
-			this.$store.dispatch("friend/getFriendListData");
+		onShow() {
+			this.getFriendList();
 		}
     }
 </script>

@@ -1,6 +1,6 @@
 <template>
 	<view class="friend-card" hover-class="press-on">
-			<view class="friend-card-left">{{userName}}</view>
+			<view class="friend-card-left">{{userName.slice(0,1)}}</view>
 			<view class="friend-card-right">
 				<view class="friend-card-top">
 					<view class="friend-card-title">{{title}}</view>

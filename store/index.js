@@ -24,6 +24,11 @@ const store = new Vuex.Store({
 		subUserInfo({ dispatch, commit }, params) {
 		    console.log("上传用户信息");
 		},
+		getInfo({ dispatch, commit }, params) {
+			
+			
+		    
+		},
 	},
     mutations: {
         login(state, prop) {

@@ -4,7 +4,9 @@ import App from './App'
 import store from './store'
 
 Vue.config.productionTip = false
-
+import {post, get} from './tool.js';
+Vue.prototype.$post = post;
+Vue.prototype.$get = get;
 Vue.prototype.$store = store
 import uniIcons from '@/components/uni-icons/uni-icons.vue'
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'

@@ -41,7 +41,7 @@
 					 color="#666666" />
 				</view>
 				<text class="">
-					{{userData.saying}}
+					{{userData.ID}}
 				</text>
 				<view class="edit-icon-right">
 					<uni-icons
@@ -59,7 +59,7 @@
 					 color="#666666" />
 				</view>
 				<text class="">
-					{{userData.saying}}
+					{{userData.ID}}
 				</text>
 				<view class="edit-icon-right">
 					<uni-icons
@@ -72,10 +72,16 @@
 		</view>
 		<view class="friend-detail-bottom">
 			<button v-if="!isFriend" class="bottom-btn" type="default" size="mini">添加好友</button>
-			<button v-else  class="bottom-btn" type="default" size="mini">删除好友</button>
-			<button @tap="goEditInfo()" class="bottom-btn" type="default" size="mini">编辑资料</button>
+			<button v-else @tap="togglePopup('bottom', 'popup')"  class="bottom-btn" type="default" size="mini">删除好友</button>
+			<button v-if="isMe" @tap="goEditInfo()" class="bottom-btn" type="default" size="mini">编辑资料</button>
 			<button @tap="goMessageDetail()" class="bottom-btn" type="primary" size="mini">发消息</button>
 		</view>
+		<uni-popup ref="showpopup" :type="type" >
+			<view class="popup-content">
+				<button type="warn" @tap="delFriend()">删除好友</button>
+				<button @tap="closePopup">取消</button>
+			</view>
+		</uni-popup>
     </view>
 </template>
 
@@ -84,6 +90,7 @@
         mapState,
         mapMutations
     } from 'vuex'
+    import uniPopup from '@/components/uni-popup/uni-popup.vue'
     export default {
 		data(){
 		  return {
@@ -98,6 +105,9 @@
 			  qianMing:"wia",
 			  isFriend:true,
 			  isUser:true,
+			  isMe:true,
+			  friendID:"",
+			  type:"",
 			  userData:{
 			  	ID:"",
 			  	province:"",
@@ -123,6 +133,29 @@
 			  ]),
         },
         methods: {
+			closePopup() {
+				this.$nextTick(() => {
+					this.$refs['showpopup'].close()
+					// console.log(this.$refs['showpopup']);
+				})
+			},
+			togglePopup(type, open) {
+				switch (type) {
+					case 'top':
+						this.content = '顶部弹出 popup'
+						break
+					case 'bottom':
+						this.content = '底部弹出 popup'
+						break
+					case 'center':
+						this.content = '居中弹出 popup'
+						break
+				}
+				this.type = type
+				this.$nextTick(() => {
+					this.$refs['show' + open].open()
+				})
+			},
             goMessageDetail() {
 				uni.navigateTo({
 					url: '../message/message-detail'
@@ -133,54 +166,83 @@
 					url: '../user/edit-info'
 				});
 			},
-			getRequest() {
+			getRequest(ID=this.ID) {
 				this.loading = true;
-				this.userData['ID'] = this.ID;
-				uni.request({
-					url: "http://localhost:8080/user/getUserInfo",
-					method:'get',
-					data: {ID:this.ID}
-				}).then(res => {
-					
-					console.log('request success', res[1].data);
-					if(res[1].data.code == 0) {
-						uni.showToast({
-							title: res[1].data.msg,
-							icon: 'none',
-							// mask: true,
-						});
-						for(let key in this.userData) {
-							if(res[1].data.data[key]) {
-								this.userData[key] = res[1].data.data[key];
-							}
-						}
-						this.userData.newPassword="",
-						this.userData.rePassword=""
-					} else {
-						uni.showToast({
-							title: res[1].data.msg,
-							icon: 'none',
-							// mask: true,
-						});
-					}
-					
-					this.loading = false;
-				}).catch(err => {
-					console.log('request fail', err);
-					uni.showModal({
-						content: err.errMsg,
-						showCancel: false
+				this.userData['ID'] = ID;
+				this.$get('/user/getUserInfo',{ID:ID})
+				.then((value)=>{
+					uni.showToast({
+						title: value.msg,
+						icon: 'none',
+						mask: true,
 					});
-			        
+					for(let key in this.userData) {
+						if(value.data[key]) {
+							this.userData[key] = value.data[key];
+						}
+					}
+					this.userData.newPassword="";
+					this.userData.rePassword="";
 					this.loading = false;
-				});
+				}).catch((reason)=>{
+					uni.showToast({
+						title: reason,
+						icon: 'none',
+						// mask: true,
+					});
+					this.loading = false;
+				})
 			},
+			analFriend(ID) {
+				this.loading = true;
+				this.$get('/friend/analFriend',{IDA:ID,IDB:this.ID})
+				.then((value)=>{
+					this.isFriend = value.status;
+					this.loading = false;
+				}).catch((reason)=>{
+					uni.showToast({
+						title: reason,
+						icon: 'none',
+						// mask: true,
+					});
+					this.loading = false;
+				})
+			},
+			delFriend() {
+				this.loading = true;
+				this.$get('/friend/delFriend',{IDA:this.friendID,IDB:this.ID})
+				.then((value)=>{
+					uni.showToast({
+						title: value.msg,
+						icon: 'none',
+						// mask: true,
+					});
+					this.loading = false;
+					uni.navigateBack()
+				}).catch((reason)=>{
+					uni.showToast({
+						title: reason,
+						icon: 'none',
+						// mask: true,
+					});
+					this.loading = false;
+				})
+			}
         },
 		components:{
+			uniPopup
 		},
-		onLoad() {
+		onLoad(option) {
 			this.$store.dispatch("friend/getFriendDetailData");
-			this.getRequest();
+			if(option.ID) {
+				this.getRequest(option.ID);
+				this.analFriend(option.ID);
+				this.friendID = option.ID;
+				this.isMe = false;
+			} else {
+				this.getRequest();
+				this.isMe = true;
+			}
 		}
     }
 </script>
@@ -278,6 +340,13 @@
 		  line-height: 34px;
 		  border: none;
 	  }
+  }
+  .popup-content {
+  	/* #ifndef APP-NVUE */
+  	display: block;
+  	/* #endif */
+  	background-color: #fff;
+  	font-size: 14px;
   }
 }
 </style>
