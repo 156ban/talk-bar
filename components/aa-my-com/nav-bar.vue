@@ -12,15 +12,15 @@
 				<button 
 				  class="button" 
 				  @click="togglePopup('center', 'popup')">
-				  {{userName || "杨洋"}}
+				  {{userName || "未登录"}}
 				</button>
 			</view>
 		  </block>
 		</uni-nav-bar>
 		<uni-popup ref="showpopup" type="center" >
 			<view class="popup-content">
+				<button @tap="goUserInfo">个人信息</button>
 				<button @tap="redirectTo">注销</button>
-				<!-- <button @tap="redirectTo">修改密码</button> -->
 			</view>
 		</uni-popup>
 	</view>
@@ -40,7 +40,7 @@
 		},
 		computed:{
 			...mapState([
-			        'userName'
+			        'ID','userName'
 			      ]),
 		},
 		props:{
@@ -76,6 +76,11 @@
 			redirectTo() {
 				uni.navigateTo({
 					url: '../login/login'
+				});
+			},
+			goUserInfo() {
+				uni.navigateTo({
+					url: '../friend/friend-detail?ID='+this.ID
 				});
 			}
 		}

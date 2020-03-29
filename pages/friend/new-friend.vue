@@ -5,22 +5,22 @@
 				<uni-search-bar 
 				  radius="100" 
 				  placeholder="搜索"
+				  v-model="searchID"
 				  class="new-friend-search"/>
     		</view>
 			<view class="person-group">
 				<view 
-				  v-for="(item,index) in newFriendListData"
+				  v-for="(item,index) in this.userListData"
+				  @tap="goDetail(item.ID)"
 				  :key="index">
 				  <person-card
-				    :userName="item.userName"
-					:title="item.title"
+				    :userName="item.name"
+					:title="item.saying"
 					:sex="item.sex"
 					:age="item.age"
-					:address="item.address">
+					:address="item.province +' '+item.city">
 				  </person-card>
 				</view>
-				<person-card></person-card>
-				<person-card></person-card>
 			</view>
     	</view>
 		
@@ -38,6 +38,8 @@
 		data(){
 		  return {
 			  navTitle:"联系人",
+			  userListData:[],
+			  searchID:"",
 			  mockData:[
 				  {
 				    userName:"王",
@@ -54,12 +56,35 @@
 			    'newFriendListData'
 			  ]),
         },
+		watch:{
+			searchID() {
+				this.searchUser();
+			}
+		},
         methods: {
-            goDetail() {
+            goDetail(ID) {
             	uni.navigateTo({
-            		url: '../friend/friend-detail'
+            		url: '../friend/friend-detail?ID='+ID
             	});
-            }
+            },
+			searchUser() {
+				console.log('触发');
+				this.$get('/user/getUserInfo',{ID:this.searchID.value})
+				.then((value)=>{
+					console.log(value);
+					this.userListData = value.data?[value.data]:[];
+					uni.showToast({
+						title: value.msg,
+						icon: 'none',
+						// mask: true,
+					});
+				}).catch((reason)=>{
+					uni.showModal({
+						content: reason,
+						showCancel: false
+					});
+				})
+			}
         },
 		components:{
 			navBar,personCard

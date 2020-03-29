@@ -270,80 +270,51 @@
 			editRequest() {
 				this.loading = true;
 				this.userData['ID'] = this.ID;
-				uni.request({
-					url: "http://localhost:8080/user/chUserInfo",
-					method:'get',
-					data: this.userData
-				}).then(res => {
-					
-					console.log('request success', res[1].data);
-					if(res[1].data.code == 0) {
-						uni.showToast({
-							title: res[1].data.msg,
-							icon: 'none',
-							// mask: true,
-						});
-						this.getRequest();
-					} else {
-						uni.showToast({
-							title: res[1].data.msg,
-							icon: 'none',
-							// mask: true,
-						});
-					}
-					
-					this.loading = false;
-				}).catch(err => {
-					console.log('request fail', err);
-					uni.showModal({
-						content: err.errMsg,
-						showCancel: false
+				this.$get('/user/chUserInfo',this.userData)
+				.then((value)=>{
+					uni.showToast({
+						title: value.msg,
+						icon: 'none',
+						// mask: true,
 					});
-			        
+					this.$store.dispatch("getUserInfo",{ID:this.ID});
+					this.getRequest();
 					this.loading = false;
-				});
+				}).catch((reason)=>{
+					uni.showToast({
+						title: reason,
+						icon: 'none',
+						// mask: true,
+					});
+					this.loading = false;
+				})
 			},
 			getRequest() {
 				this.loading = true;
 				this.userData['ID'] = this.ID;
-				uni.request({
-					url: "http://localhost:8080/user/getUserInfo",
-					method:'get',
-					data: {ID:this.ID}
-				}).then(res => {
-					
-					console.log('request success', res[1].data);
-					if(res[1].data.code == 0) {
-						uni.showToast({
-							title: res[1].data.msg,
-							icon: 'none',
-							// mask: true,
-						});
-						for(let key in this.userData) {
-							if(res[1].data.data[key]) {
-								this.userData[key] = res[1].data.data[key];
-							}
-						}
-						this.userData.newPassword="",
-						this.userData.rePassword=""
-					} else {
-						uni.showToast({
-							title: res[1].data.msg,
-							icon: 'none',
-							// mask: true,
-						});
-					}
-					
-					this.loading = false;
-				}).catch(err => {
-					console.log('request fail', err);
-					uni.showModal({
-						content: err.errMsg,
-						showCancel: false
+				this.$get('/user/getUserInfo',{ID:this.ID})
+				.then((value)=>{
+					uni.showToast({
+						title: value.msg,
+						icon: 'none',
+						// mask: true,
 					});
-			        
+					for(let key in this.userData) {
+						if(value.data[key]) {
+							this.userData[key] = value.data[key];
+						}
+					}
+					this.userData.newPassword="";
+					this.userData.rePassword="";
 					this.loading = false;
-				});
+				}).catch((reason)=>{
+					uni.showToast({
+						title: reason,
+						icon: 'none',
+						// mask: true,
+					});
+					this.loading = false;
+				})
 			},
 		},
 		onLoad() {

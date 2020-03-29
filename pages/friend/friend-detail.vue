@@ -3,7 +3,7 @@
     	<view class="friend-detail-top">
     		<view class="friend-detail-top-left">
     			<view class="user-img">
-    				{{imgeName}}
+    				{{userData.name.slice(0,1)}}
     			</view>
     		</view>
 			<view class="friend-detail-top-right">
@@ -71,10 +71,10 @@
 			</view>
 		</view>
 		<view class="friend-detail-bottom">
-			<button v-if="!isFriend" class="bottom-btn" type="default" size="mini">添加好友</button>
-			<button v-else @tap="togglePopup('bottom', 'popup')"  class="bottom-btn" type="default" size="mini">删除好友</button>
+			<button v-if="(!isFriend) && (!isMe)" @ @tap="addFriend" type="default" size="mini">添加好友</button>
+			<button v-else-if="!isMe" @tap="togglePopup('bottom', 'popup')"  class="bottom-btn" type="default" size="mini">删除好友</button>
 			<button v-if="isMe" @tap="goEditInfo()" class="bottom-btn" type="default" size="mini">编辑资料</button>
-			<button @tap="goMessageDetail()" class="bottom-btn" type="primary" size="mini">发消息</button>
+			<button v-if="!isMe" @tap="goMessageDetail()" class="bottom-btn" type="primary" size="mini">发消息</button>
 		</view>
 		<uni-popup ref="showpopup" :type="type" >
 			<view class="popup-content">
@@ -105,14 +105,12 @@
 			  qianMing:"wia",
 			  isFriend:true,
 			  isUser:true,
-			  isMe:true,
 			  friendID:"",
 			  type:"",
 			  userData:{
 			  	ID:"",
 			  	province:"",
 			  	xingZuo:"",
-			  	province:"",
 			  	city:"",
 			  	name:"",
 			  	age:"",
@@ -131,6 +129,9 @@
 			...mapState([
 				'ID'
 			  ]),
+			  isMe() {
+				  return this.ID === this.friendID;
+			  }
         },
         methods: {
 			closePopup() {
@@ -193,11 +194,11 @@
 					this.loading = false;
 				})
 			},
-			analFriend(ID) {
+			analFriend() {
 				this.loading = true;
-				this.$get('/friend/analFriend',{IDA:ID,IDB:this.ID})
+				this.$get('/friend/analFriend',{IDA:this.friendID,IDB:this.ID})
 				.then((value)=>{
-					this.isFriend = value.status;
+					this.isFriend = value.data.status;
 					this.loading = false;
 				}).catch((reason)=>{
 					uni.showToast({
@@ -227,6 +228,26 @@
 					});
 					this.loading = false;
 				})
+			},
+			addFriend() {
+				this.loading = true;
+				this.$get('/friend/addFriend',{IDA:this.friendID,IDB:this.ID})
+				.then((value)=>{
+					uni.showToast({
+						title: value.msg,
+						icon: 'none',
+						// mask: true,
+					});
+					this.loading = false;
+					this.analFriend(this.friendID);
+				}).catch((reason)=>{
+					uni.showToast({
+						title: reason,
+						icon: 'none',
+						// mask: true,
+					});
+					this.loading = false;
+				})
 			}
         },
 		components:{
@@ -235,14 +256,16 @@
 		onLoad(option) {
 			this.$store.dispatch("friend/getFriendDetailData");
 			if(option.ID) {
-				this.getRequest(option.ID);
-				this.analFriend(option.ID);
 				this.friendID = option.ID;
 				this.isMe = false;
 			} else {
 				this.getRequest();
 				this.isMe = true;
 			}
+		},
+		onShow() {
+			this.analFriend();
+			this.getRequest();
 		}
     }
 </script>
