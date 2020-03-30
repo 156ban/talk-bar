@@ -33,41 +33,8 @@
 			</view>
     	</view>
 		<view class="friend-detail-middle">
-			<view class="user-info-card" hover-class="press-on">
-				<view class="edit-icon-left">
-					<uni-icons
-					 type="compose" 
-					 size="20" 
-					 color="#666666" />
-				</view>
-				<text class="">
-					{{userData.ID}}
-				</text>
-				<view class="edit-icon-right">
-					<uni-icons
-					 type="arrowright"
-					 class="edit-icon-right"
-					 size="20" 
-					 color="#666666" />
-				</view>
-			</view>
-			<view class="user-info-card" hover-class="press-on">
-				<view class="edit-icon-left">
-					<uni-icons
-					 type="compose" 
-					 size="20" 
-					 color="#666666" />
-				</view>
-				<text class="">
-					{{userData.ID}}
-				</text>
-				<view class="edit-icon-right">
-					<uni-icons
-					 type="arrowright"
-					 class="edit-icon-right"
-					 size="20" 
-					 color="#666666" />
-				</view>
+			<view class="user-info-card">
+				{{userData.saying}}
 			</view>
 		</view>
 		<view class="friend-detail-bottom">
@@ -275,80 +242,74 @@
   padding: 0 20rpx;
   background-color: #FFFFFF;
   >uni-view {
-	  margin-top: 10px;
+	  margin-top: 25rpx;
   }
   &-top {
-	  height: 70px;
+	  height: 210rpx;
 	  display: flex;
 	  flex-direction: row;
 	  >uni-view {
 	  }
 	  &-left {
-		  width: 80px;
+		  width: 200rpx;
 		  .user-img {
-			  width: 70px;
-			  height: 70px;
-			  border-radius:44px;
-			  line-height: 70px;
+			  width: 200rpx;
+			  height: 200rpx;
+			  border-radius:110rpx;
+			  line-height: 200rpx;
 			  text-align: center;
-			  font-size: 40px;
+			  font-size: 100rpx;
 			  background-color: pink;
 		  }
 	  }
 	  &-right {
-		  width: calc(100% - 80px);
-		  font-size: 14px;
+		  width: calc(100% - 200rpx);
+		  font-size: 35rpx;
 		  line-height: 18px;
 		  &-top {
-			  height: 35px;
+			  height: 87.5rpx;
 			  display: flex;
 			  .user-name {
-				  font-size: 25px;
-				  line-height: 35px;
+				  font-size: 62.5rpx;
+				  line-height: 87.5rpx;
 				  font-weight: 550;
 				  flex: 1;
 				  uni-view {
-					  line-height: 20px;
+					  line-height: 30rpx;
 				  }
 			  }
 			  .dian-zan {
 				  text-align: center;
 				  display: flex;
-				  width: 80px;
-				  line-height: 35px;
+				  width: 200rpx;
+				  line-height: 87.5rpx;
 				  .dian-zan-icon {
-					  height: 35px;
+					  height: 87.5rpx;
 				  }
 				  .dian-zan-number {
-					  height: 35px;
+					  height: 87.5rpx;
 				  }
 			  }
 		  }
 		  &-middle {
-			  height: 17px;
+			  height: 42.5rpx;
 			  
 		  }
 		  &-bottom {
-			  height: 17px;
+			  height: 42.5rpx;
 		  }
 	  }
   }
   &-middle {
-	  height: 110px;
+	  height: 275rpx;
+	  background-color:#dddddd;
+	  border-radius: 15rpx;
 	  .user-info-card {
-		  height: 40px;
-		  line-height: 40px;
-		  display: flex;
-		  > uni-view {
-			  width: 60rpx;
-		  } 
-		  > uni-text {
-			  flex: 1;
-		  }
+		  word-break: keep-all;
 	  }
   }
   &-bottom {
-  	  height: 44px;
+  	  height: 110rpx;
   	  background-color: #efeff4;
 	  position: fixed;
 	  width: 100%;
@@ -358,9 +319,9 @@
 	  align-items: center;
 	  .bottom-btn {
 		  justify-content: space-around;
-		  height: 34px;
+		  height: 85rpx;
 		  width: 220rpx;
-		  line-height: 34px;
+		  line-height: 85rpx;
 		  border: none;
 	  }
   }
@@ -369,7 +330,7 @@
   	display: block;
   	/* #endif */
   	background-color: #fff;
-  	font-size: 14px;
+  	font-size: 35rpx;
   }
 }
 </style>
