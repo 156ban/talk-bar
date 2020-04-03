@@ -126,7 +126,7 @@
 			},
             goMessageDetail() {
 				uni.navigateTo({
-					url: '../message/message-detail'
+					url: '../message/message-detail?ID='=this.friendID;
 				});
 			},
 			goEditInfo() {
@@ -134,7 +134,7 @@
 					url: '../user/edit-info'
 				});
 			},
-			getRequest(ID=this.ID) {
+			getRequest(ID=this.friendID) {
 				this.loading = true;
 				this.userData['ID'] = ID;
 				this.$get('/user/getUserInfo',{ID:ID})
@@ -224,10 +224,8 @@
 			this.$store.dispatch("friend/getFriendDetailData");
 			if(option.ID) {
 				this.friendID = option.ID;
-				this.isMe = false;
 			} else {
 				this.getRequest();
-				this.isMe = true;
 			}
 		},
 		onShow() {
