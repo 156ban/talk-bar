@@ -126,7 +126,7 @@
 			},
             goMessageDetail() {
 				uni.navigateTo({
-					url: '../message/message-detail?ID='=this.friendID;
+					url: '../message/message-detail?ID='+this.friendID
 				});
 			},
 			goEditInfo() {
