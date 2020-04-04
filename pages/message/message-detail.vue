@@ -3,19 +3,12 @@
 			<view v-for="(item,index) in messageDetailData" :key="index">
 				<detail-card
 				  :key="index"
-				  :name="item.name"
-				  :person="item.person"
-				  :content="item.content">
+				  :name="item.sender===ID?userName:friendInfo.name"
+				  :person="item.sender===ID?1:0"
+				  :ID="item.sender===ID?ID:friendInfo.ID"
+				  :content="item.message">
 				</detail-card>
 			</view>
-			<detail-card :person="1" content="H5版常见问题参考"></detail-card>
-			<detail-card></detail-card>
-			<detail-card></detail-card>
-			<detail-card></detail-card>
-			<detail-card :person="1"></detail-card>
-			<detail-card></detail-card>
-			<detail-card :person="1"></detail-card>
-			<detail-card></detail-card>
 			<view class="message-detail-bottom">
 				<textarea 
 				  class="message-detail-input"
@@ -40,14 +33,17 @@
 	export default {
 		data() {
 			return {
-				sendData:""
+				sendData:"",
+				friendInfo:{},
+				messageDetailData:[]
 			}
 		},
 		computed: {
 		    ...mapState('message', [
-		        'messageDetailData',
-				'messageDetailTarget'
 		      ]),
+			...mapState([
+				'ID','userName'
+			]),
 		},
 		watch:{
 			messageDetailTarget:function(){
@@ -63,14 +59,55 @@
 				})
 			},
 			sendMessage() {
-				this.$store.commit("message/addMessageDetailData", {content:this.sendData});
+				if(this.sendData==="") {
+					return;
+				}
+				this.$get('/message/sendMessage',
+				{
+					 sender:this.ID,
+					 reciever:this.friendInfo.ID,
+					 message:this.sendData,
+					 time:new Date()
+				})
+				.then((value)=>{
+					this.getList();
+					this.sendData = "";
+				})
+				.catch((err)=>{
+					uni.showToast({
+						title: err,
+						icon: 'none',
+						// mask: true,
+					});
+					console.log(err);
+				})
+			},
+			getList() {
+				this.$get('/message/getMessageDetail',{IDA:this.ID,IDB:this.friendInfo.ID})
+				.then((value)=>{
+					this.messageDetailData = value.data;
+				})
+				.catch((err)=>{
+					uni.showToast({
+						title: err,
+						icon: 'none',
+						// mask: true,
+					});
+					console.log(err);
+				})
 			}
 		},
 		components:{
 			detailCard
 		},
-		onLoad() {
+		onLoad(option) {
 			this.$store.dispatch("message/getMessageDetailData");
+			this.friendInfo = JSON.parse(option.friendInfo);
+			console.log(this.friendInfo);
+			
+		},
+		onShow() {
+			this.getList();
 		}
 	}
 </script>

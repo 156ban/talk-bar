@@ -5,26 +5,16 @@
 		 :navTitle="navTitle"/>
 		<view class="info-card-group">
 			<view 
-			  @tap="goDetail()" 
+			  @tap="goDetail(item)" 
 			  class=""
 			  v-for="(item,index) in messageListData"
 			  :key="index" >
 				<info-card
-				 :userName="item.userName"
-				 :title="item.title"
-				 :time="item.time"
-				 :info="item.info"
-				 :messageNum="item.messageNum">
+				 :userName="item.name.slice(0,1)"
+				 :title="item.name"
+				 :info="item.data">
 				</info-card>
 			</view>
-			<info-card></info-card>
-			<info-card></info-card>
-			<info-card></info-card>
-			<info-card></info-card>
-			<info-card></info-card>
-			<info-card></info-card>
-			<info-card></info-card>
-			<info-card></info-card>
 		</view>
 	</view>
 </template>
@@ -38,6 +28,7 @@
 			return {
 				navTitle:"消息",
 				city: '北京',
+				messageListData:[],
 				MockData:[{userName:"王",
 				           title:"这是人名",
 						   time:"下午1:00",
@@ -46,22 +37,36 @@
 			}
 		},
         computed: {
-		    ...mapState('message', [
-		        'messageListData',
+			...mapState([
+		        'ID','userName'
 		      ]),
 	    },
 		components:{
 			infoCard,navBar
 		},
 		methods:{
-			goDetail() {
+			goDetail(friendInfo) {
 				uni.navigateTo({
-					url: '../message/message-detail'
+					url: '../message/message-detail?friendInfo='+JSON.stringify(friendInfo)
 				});
+			},
+			getList() {
+				this.$get('/message/getMessageList',{ID:this.ID})
+				.then((value)=>{
+					this.messageListData = value.data;
+				})
+				.catch((err)=>{
+					uni.showToast({
+						title: err,
+						icon: 'none',
+						// mask: true,
+					});
+					console.log(err);
+				})
 			}
 		},
-		onLoad() {
-			this.$store.dispatch("message/getMessageListData");
+		onShow() {
+			this.getList();
 		}
     }
 </script>

@@ -1,12 +1,12 @@
 <template>
 	<view class="detail-card">
-		<view class="detail-card-left" v-if="!person">{{name}}</view>
+		<view class="detail-card-left" v-if="!person">{{name.slice(0,1)}}</view>
 		<view class="detail-card-center" :style="'text-align:'+(person?'right':'left')">
 			<view class="text-card">
 				{{content}}
 			</view>
 		</view>
-		<view class="detail-card-right" v-if="person">{{name}}</view>
+		<view class="detail-card-right" v-if="person">{{name.slice(0,1)}}</view>
 	</view>
 </template>
 
@@ -24,6 +24,9 @@
 			name: {
 				type: String,
 				default: "杨",
+			},
+			ID: {
+				type: String,
 			}
 		},
 		data() {
