@@ -50,7 +50,15 @@
 				uni.setNavigationBarTitle({
 				　　title:this.messageDetailTarget.name
 				})
-			}
+			},
+			messageDetailData() {
+			      this.$nextTick(() => {
+			        uni.pageScrollTo({
+			                    duration:0,
+			                    scrollTop:parseInt(getComputedStyle(this.$el).height)
+			        })
+			      })
+			    }
 		},
 		methods:{
 			confirm() {
@@ -104,7 +112,6 @@
 			this.$store.dispatch("message/getMessageDetailData");
 			this.friendInfo = JSON.parse(option.friendInfo);
 			console.log(this.friendInfo);
-			
 		},
 		onShow() {
 			this.getList();
