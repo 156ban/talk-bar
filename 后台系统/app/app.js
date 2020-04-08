@@ -7,7 +7,9 @@ require('./api/model/db');
 var indexRouter = require('./routes/index');
 
 var app = express();
-
+let router = express.Router();
+let server = require('http').createServer(app);
+let io = require('socket.io')(server);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -35,5 +37,22 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-app.listen(8080, () => console.log('Example app listening on port 8080!'))
+// io.set('transports', ['websocket', 'xhr-polling', 'jsonp-polling', 'htmlfile', 'flashsocket']);
+io.on('connection', function(socket){ // socket相关监听都要放在这个回调里
+    console.log('a user connected');
+ 
+    socket.on("disconnect", function() {
+        console.log("a user go out");
+    });
+    io.emit('msg', { will: 'be received by everyone'});
+    socket.on("msg", function(obj) {
+        //延迟3s返回信息给客户端
+		console.log('收到客户端消息')
+        setTimeout(function(){
+            console.log('the websokcet message is'+obj);
+            io.emit("msg", obj);
+        },3000);
+    });
+});
+server.listen(8080, () => console.log('Example app listening on port 8080!'))
 module.exports = app;
