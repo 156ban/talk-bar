@@ -54,8 +54,8 @@
 			messageDetailData() {
 			      this.$nextTick(() => {
 			        uni.pageScrollTo({
-			                    duration:0,
-			                    scrollTop:parseInt(getComputedStyle(this.$el).height)
+						duration:0,
+						scrollTop:parseInt(getComputedStyle(this.$el).height)
 			        })
 			      })
 			    }
@@ -70,39 +70,46 @@
 				if(this.sendData==="") {
 					return;
 				}
-				this.$get('/message/sendMessage',
-				{
+				this.$socket.emit('sendMessage', {
 					 sender:this.ID,
 					 reciever:this.friendInfo.ID,
 					 message:this.sendData,
 					 time:new Date()
-				})
-				.then((value)=>{
-					this.getList();
-					this.sendData = "";
-				})
-				.catch((err)=>{
-					uni.showToast({
-						title: err,
-						icon: 'none',
-						// mask: true,
-					});
-					console.log(err);
-				})
+				});
+				// this.$get('/message/sendMessage',
+				// {
+				// 	 sender:this.ID,
+				// 	 reciever:this.friendInfo.ID,
+				// 	 message:this.sendData,
+				// 	 time:new Date()
+				// })
+				// .then((value)=>{
+				// 	this.getList();
+				// 	this.sendData = "";
+				// })
+				// .catch((err)=>{
+				// 	uni.showToast({
+				// 		title: err,
+				// 		icon: 'none',
+				// 		// mask: true,
+				// 	});
+				// 	console.log(err);
+				// })
 			},
 			getList() {
-				this.$get('/message/getMessageDetail',{IDA:this.ID,IDB:this.friendInfo.ID})
-				.then((value)=>{
-					this.messageDetailData = value.data;
-				})
-				.catch((err)=>{
-					uni.showToast({
-						title: err,
-						icon: 'none',
-						// mask: true,
-					});
-					console.log(err);
-				})
+				this.$socket.emit('messageDetail', {IDA:this.ID,IDB:this.friendInfo.ID});
+				// this.$get('/message/getMessageDetail',{IDA:this.ID,IDB:this.friendInfo.ID})
+				// .then((value)=>{
+				// 	this.messageDetailData = value.data;
+				// })
+				// .catch((err)=>{
+				// 	uni.showToast({
+				// 		title: err,
+				// 		icon: 'none',
+				// 		// mask: true,
+				// 	});
+				// 	console.log(err);
+				// })
 			}
 		},
 		components:{
@@ -114,6 +121,22 @@
 			console.log(this.friendInfo);
 		},
 		onShow() {
+			this.$socket.on('messageDetail',({code,data,msg})=>{ // 监听服务端的消息“msg”
+			    if(code == 0) {
+					if((data.sender == this.ID && data.reciever == this.friendInfo.ID)|| (data.reciever == this.ID&&data.sender == this.friendInfo.ID) )
+					this.messageDetailData = data.data;
+					console.log("here",data.data,this.messageDetailData);
+				} else {
+					uni.showToast({
+						title: msg,
+						icon: 'none',
+						// mask: true,
+					});
+				}
+				console.log('收到服务器消息');
+				// socket.emit('msg', {rp:"收到服务器消息"}); //向服务器发送消息
+				console.log(data);
+			});
 			this.getList();
 		}
 	}

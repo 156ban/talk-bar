@@ -5,11 +5,13 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 require('./api/model/db');
 var indexRouter = require('./routes/index');
-
+var SocketMessageDetail = require('./api/controller/message/SocketMessageDetail');
+var SocketSendMessage = require('./api/controller/message/SocketSendMessage');
 var app = express();
 let router = express.Router();
 let server = require('http').createServer(app);
 let io = require('socket.io')(server);
+global.io = io;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -53,6 +55,8 @@ io.on('connection', function(socket){ // socket相关监听都要放在这个回
             io.emit("msg", obj);
         },3000);
     });
+	socket.on("messageDetail", SocketMessageDetail);
+	socket.on("sendMessage", SocketSendMessage);
 });
 server.listen(8080, () => console.log('Example app listening on port 8080!'))
 module.exports = app;

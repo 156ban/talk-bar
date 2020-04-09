@@ -10,6 +10,7 @@ import {post, get} from './tool.js';
 Vue.prototype.$post = post;
 Vue.prototype.$get = get;
 Vue.prototype.$store = store
+
 import uniIcons from '@/components/uni-icons/uni-icons.vue'
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue'
 import uniSection from '@/components/uni-section/uni-section.vue'
@@ -24,12 +25,9 @@ Vue.component('uniBadge',uniBadge)
 Vue.component('uniSearchBar',uniSearchBar)
 App.mpType = 'app'
 let socket = io("ws://localhost:8080"); // 建立链接
+Vue.prototype.$socket = socket
 		// 此时会触发后台的connect事件
-		socket.on('msg',function(data){ // 监听服务端的消息“msg”
-		    console.log('收到服务器消息');
-		    socket.emit('msg', {rp:"收到服务器消息"}); //向服务器发送消息
-		    console.log(data);
-		});
+		
 console.log('运行了');
 
 
